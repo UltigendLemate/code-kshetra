@@ -47,7 +47,7 @@ style={{
     boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
 }}
 className="w-[50vw] max-h-fit m-auto h-fit border-spacing-6 rounded-lg p-[2vw] bg-white">
-<Form>
+
     
       <form onSubmit={()=>givePrompt(idea)} className="space-y-4 grid">
       <div className="font-bold text-2xl text-center my-[2vh]"> Create Product Requirement Document</div>
@@ -63,7 +63,7 @@ className="w-[50vw] max-h-fit m-auto h-fit border-spacing-6 rounded-lg p-[2vw] b
             {isLoading===false ? "Generate Idea" : "Generating Idea"}
         </Button>
       </form>
-    </Form>
+
     </div>
         </main>
         {isLoading && <h1>loading</h1>}
