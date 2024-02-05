@@ -47,7 +47,14 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
       <div className="flex h-full w-full bg-blue-200 relative">
         <Sidebar classNames="w-1/5 p-6" />
 
-        <div className="flex w-4/5 flex-col gap-5 bg-muted p-6 shadow-lg shadow-black">
+{/* 
+<Sidebar className="w-1/5 p-6" />
+
+
+
+                <div className="w-4/5 bg-muted p-6 shadow-lg shadow-black flex flex-col gap-5 absolute right-0">
+*/}
+        <div className="flex w-4/5 flex-col gap-5 bg-muted p-6 shadow-lg shadow-black absolute right-0">
           <h2 className="p-5 text-2xl font-semibold capitalize ">{idea}</h2>
           <div className="rounded-md bg-gray-50 p-6 shadow-xl relative">
           <Dialog className="">
