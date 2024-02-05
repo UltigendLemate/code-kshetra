@@ -4,7 +4,9 @@ import {
   HarmBlockThreshold,
 } from "@google/generative-ai";
 import { env } from "~/env.js";
-import { Project } from "~/types/project";
+import { type Project } from "~/types/project";
+import { addNewProject } from '~/lib/queries';
+import openai from "openai";
 const MODEL_NAME = "gemini-pro";
 
 const API_KEY = env.GOOGLE_AI_API;
@@ -54,11 +56,33 @@ async function run(idea : string) {
   return finalJson;
 }
 
+
+async function image_generation(idea : string) {
+
+  const response = await openai.createImage({
+    model: "dall-e-3",
+    prompt: "logo for a company that sells " + idea,
+    n: 1,
+    size: "1024x1024",
+  });
+  image_url = response.data.data[0].url;
+  console.log(image_url);
+}
+
 export async function POST(req: Request) {
   try{
       const {idea}  = await req.json() as {idea : string};
+      console.log(idea);
         const res = await run(idea);
         console.log(res);
+        // res.images = await image_generation(idea);
+        const stringified_json = JSON.stringify(res);
+        
+        if(res) {
+          console.log("Adding new project")
+          await addNewProject(stringified_json, idea)
+        }
+        console.log("it must be added now")
         return new Response(JSON.stringify(res), {status: 200});
   }
   catch(error){
