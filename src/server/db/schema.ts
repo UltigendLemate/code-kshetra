@@ -7,6 +7,7 @@ import {
   serial,
   text,
   timestamp,
+  uuid,
   varchar,
 } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
@@ -22,8 +23,9 @@ export const createTable = pgTableCreator((name) => `code-kshetra_${name}`);
 export const project = createTable(
   "project",
   {
-    id: serial("id").primaryKey(),
+    id: uuid("id").defaultRandom().primaryKey().notNull(),
     idea: text("idea").notNull(),
+    data : text("data").notNull(),
     createdById: varchar("createdById", { length: 255 })
       .notNull()
       .references(() => users.id),
