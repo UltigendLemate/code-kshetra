@@ -24,6 +24,7 @@ import {
 
 export default function ProjectPage({ params }: { params: { projectId: string } }) {
     const [proj, setProj] = useState<Project>()
+    const [active, setActive] = useState<string>('overview')
     console.log(proj)
     const [idea, setIdea] = useState<string>("")
     const [isLoading, setIsLoading] = useState(true)
@@ -44,15 +45,15 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
   return (
     <>
       <div className="flex h-full w-full bg-blue-200 relative">
-        <Sidebar />
+        <Sidebar active={active} />
         <div className="flex w-4/5 flex-col gap-5 bg-muted p-6 shadow-lg shadow-black absolute right-0">
           <h2 className="px-5  text-2xl font-semibold capitalize ">{idea}</h2>
           <div className="rounded-md bg-gray-50 p-6 shadow-xl relative">
           <Dialog >
       <DialogTrigger asChild>
-        <Button 
+        {proj?.overview ? (<Button 
         className="absolute right-5 top-5"
-        variant="outline"><Pen/></Button>
+        variant="outline"><Pen/></Button>) : null}
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -68,23 +69,20 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
 
           // }}
           type="submit">Extrapolate this data with latest research till 2023</Button>
-          <Button type="submit">Expand the given answer for me to understand with ease</Button>
-          <Button type="submit">Provide a brief summary and explain this data in short</Button>
+          <Button type="submit">Expand the answer to understand with ease</Button>
+          <Button type="submit">Explain this data in less words</Button>
             {/* <Label htmlFor="name" className="text-right">
               Name
             </Label>
             <Input id="name" value="Pedro Duarte" className="col-span-3" /> */}
           </div>
         </div>
-        <DialogFooter>
-          <Button type="submit">Save changes</Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
             {/* <button >
               
             </button> */}
-            <Heading text="Overview" />
+            <Heading setActive={setActive} text="Overview" />
             {isLoading || !proj ? (
               <div className="space-y-2">
                 <h6 className="h-10 w-full animate-pulse rounded-md bg-gray-300 duration-1000"></h6>
@@ -92,12 +90,12 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
                 <h6 className="h-10 w-full animate-pulse rounded-md bg-gray-300 duration-1000"></h6>
               </div>
             ) : (
-              <Description />
+              <Description text={proj?.overview}/>
             )}
           </div>
 
           <div className="rounded-md bg-gray-50 p-6 shadow-xl">
-            <Heading text="Target Audience" />
+            <Heading setActive={setActive} text="Target Audience" />
             <div>
               {!isLoading && <p className="text-md ">Your key target audience includes :</p>}
               <div className="flex gap-4 flex-wrap">
@@ -125,7 +123,7 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
 
           {/* DB Schema  */}
           <div className="rounded-md bg-gray-50 p-6 shadow-xl">
-            <Heading text="Database Schema Suggestions" />
+            <Heading setActive={setActive} text="Database Schema Suggestions" />
             {/* <Description text={` ${proj?.target_audience}`} /> */}
             <div>
               <div className="mt-3 grid grid-cols-4 gap-4">
@@ -164,7 +162,7 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
 
           {/* Typography Suggestions  */}
           <div className="rounded-md bg-gray-50 p-6 shadow-xl">
-            <Heading text="Typography Suggestions" />
+            <Heading setActive={setActive} text="Typography Suggestions" />
             {/* <Description text={` ${proj?.target_audience}`} /> */}
             <div>
               <div className="mt-3 grid  grid-cols-2 gap-4">
@@ -191,13 +189,6 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
                           >
                             {aud}
                           </h4>
-
-                          <p
-                            className="truncate text-xl"
-                            style={{ fontFamily: aud }}
-                          >
-                            abcdefghijklmnopqrstuvwxyzABCDEFGHJIKLMNOPQRSTUVWXYZ
-                          </p>
                         </div>
                       );
                     })}
@@ -207,7 +198,7 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
 
           {/* Color Palette Suggestions  */}
           <div className="rounded-md bg-gray-50 p-6 shadow-xl">
-            <Heading text="Color Palette Suggestions" />
+            <Heading setActive={setActive} text="Color Palette Suggestions" />
             {/* <Description text={` ${proj?.target_audience}`} /> */}
             <div>
               <div className="mt-3 flex flex-col gap-4">
@@ -253,7 +244,7 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
 
           {/* Pain points of users  */}
           <div className="rounded-md bg-gray-50 p-6 shadow-xl">
-            <Heading text="Pain Points of Users" />
+            <Heading setActive={setActive} text="Pain Points of Users" />
             {/* <Description text={` ${proj?.target_audience}`} /> */}
             <div>
               <div className="mt-3 flex flex-col gap-4">
@@ -284,7 +275,7 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
 
           {/* Required Features  */}
           <div className="rounded-md bg-gray-50 p-6 shadow-xl">
-            <Heading text="Required Features" />
+            <Heading setActive={setActive} text="Required Features" />
             <div>
               <div className="mt-3 flex flex-col gap-4">
                 {isLoading || !proj
@@ -315,7 +306,7 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
           {/* Big Brands  */}
           <div className="rounded-md bg-gray-50 p-6 shadow-xl">
             <div>
-              <Heading text="Big Brands" />
+              <Heading setActive={setActive} text="Big Brands" />
               <p>Brands that dominate similar or this particular domain(s)</p>
             </div>
             {/* <Description text={` ${proj?.target_audience}`} /> */}
@@ -349,7 +340,7 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
           {/* Industry Trends  */}
           <div className="rounded-md bg-gray-50 p-6 shadow-xl">
             <div>
-              <Heading text="Industry Trends" />
+              <Heading setActive={setActive} text="Industry Trends" />
             </div>
             {/* <Description text={` ${proj?.target_audience}`} /> */}
             <div>
