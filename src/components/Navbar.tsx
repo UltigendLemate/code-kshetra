@@ -17,9 +17,9 @@ export default function Navbar() {
         </ul>
       </div>
       <div className="flex items-center space-x-8 text-muted">
-        <Link href={"/dada"} className="text-foreground">
+        {/* <Link href={"/dada"} className="text-foreground">
           Login
-        </Link>
+        </Link> */}
         <SignInButton />
         <span
         onClick={()=>signIn('google')}
