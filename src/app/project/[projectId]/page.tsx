@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
-
 import { signIn, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { set } from "zod";
@@ -47,7 +46,7 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
       <div className="flex h-full w-full bg-blue-200 relative">
         <Sidebar />
         <div className="flex w-4/5 flex-col gap-5 bg-muted p-6 shadow-lg shadow-black absolute right-0">
-          <h2 className="p-5 text-2xl font-semibold capitalize ">{idea}</h2>
+          <h2 className="px-5  text-2xl font-semibold capitalize ">{idea}</h2>
           <div className="rounded-md bg-gray-50 p-6 shadow-xl relative">
           <Dialog >
       <DialogTrigger asChild>

@@ -3,8 +3,10 @@
 @tailwind utilities;
 
 @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
+
 * {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-serif)
 }
 
 @layer base {
@@ -63,7 +65,7 @@
     left: 0;
     top: 0;
     width: 100vw;
-    z-index: 20;
+    z-index: 1000;
     height: 100vh;
     background: white;
 }

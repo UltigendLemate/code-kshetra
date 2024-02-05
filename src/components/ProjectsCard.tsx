@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import {
   Card,
@@ -14,15 +15,19 @@ interface ProjectsCardProps {
   title: string;
   date: string;
   desc: string;
+  id: string
 }
 
 const ProjectsCard: React.FC<ProjectsCardProps> = ({
   image,
   title,
   date,
+  id,
   desc,
 }: ProjectsCardProps) => {
   return (
+    <Link href={`/project/${id}`}>
+
     <Card className="shadow-lg duration-75 hover:scale-[1.01]">
       <CardHeader>
         <Image
@@ -41,6 +46,8 @@ const ProjectsCard: React.FC<ProjectsCardProps> = ({
         </CardDescription>
       </CardContent>
     </Card>
+          
+    </Link>
   );
 };
 

@@ -1,40 +1,34 @@
 "use client"
 
-
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../../components/ui/form"
 import { Input } from "../../components/ui/input"
 import { AiOutlineLoading } from 'react-icons/ai';
 
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Button } from "~/components/ui/button"
-import { addNewProject } from "~/lib/queries"
 import { type Project } from "~/types/project"
 import Waiting from "~/components/Waiting";
+import { useRouter } from "next/navigation";
 
 
 export default function Project() {
+  const router = useRouter();
   const [idea, setIdea] = useState('')
   // const [loading, setLoading] = useState(false)
   const [proj, setProj] = useState<Project>()
   const [isLoading, setIsLoading] = useState(false)
 
-
+  // JSON.stringify({ data: res, id })
   const givePrompt = async (values: string) => {
     console.log(values)
     setIsLoading(true)
-    const res = await axios.post('/api/getData', { idea: values });
-    setProj(res.data as Project)
-    console.log(res.data)
-    setIsLoading(false)
+    const respone = await axios.post('/api/getData', { idea: values });
+    console.log(respone)
+    const res = respone.data.res as Project;
+    const id = respone.data.id as string;
+    setProj(res)
+    console.log(res)
+    router.push(`/project/${id}`)
   }
   return (
     <>

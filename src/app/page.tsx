@@ -8,6 +8,7 @@ import FeaturesCard from "~/components/FeeaturesCard";
 import Navbar from "~/components/Navbar";
 import Footer from "~/components/Footer";
 import Waiting from "~/components/Waiting";
+import { BadgeDollarSign, Figma, GanttChartSquare, Laptop, Settings, User } from "lucide-react";
 
 export default function HomePage() {
   return (
@@ -26,7 +27,7 @@ export default function HomePage() {
           </div>
           <div className=" pt-4">
             <h6 className=" text-xl text-muted-foreground">
-              ProjectPlannerAI is a platform that suggests marketing strategies,
+              QuikPlanr is a platform that suggests marketing strategies,
             </h6>
             <h6 className=" text-xl text-muted-foreground">
               design elements and product features for your idea in minutes.
@@ -49,23 +50,23 @@ export default function HomePage() {
           <div className="grid grid-cols-6 gap-10 pt-10">
             <div className="col-span-2">
               <FeaturesCard
-                image="/ex-01.webp"
-                title="Recipe App"
-                desc=" Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea quasi delectus placeat aut obcaecati similique?"
+                icon = {<GanttChartSquare />}
+                title="Overview"
+                desc="Provides a general summary and insight into the project."
               />
             </div>
             <div className="col-span-2">
               <FeaturesCard
-                image="/ex-01.webp"
-                title="Recipe App"
-                desc=" Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea quasi delectus placeat aut obcaecati similique?"
+                icon = {<BadgeDollarSign />}
+                title="Marketing"
+                desc="Focuses on marketing-related aspects such as product names, icons, assets, and competitive analysis."
               />
             </div>
             <div className="col-span-2">
               <FeaturesCard
-                image="/ex-01.webp"
-                title="Recipe App"
-                desc=" Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea quasi delectus placeat aut obcaecati similique?"
+                icon = {<Figma />}
+                title="Design"
+                desc="Covers design elements including color palette, designs, and suggested typography."
               />
             </div>
           </div>
@@ -73,16 +74,16 @@ export default function HomePage() {
             <div className="col-span-1"></div>
             <div className="col-span-2">
               <FeaturesCard
-                image="/ex-01.webp"
-                title="Recipe App"
-                desc=" Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea quasi delectus placeat aut obcaecati similique?"
+                icon = {<Settings />}
+                title="Functionality"
+                desc="Addresses functional aspects like required features, additional features, and information architecture."
               />
             </div>
             <div className="col-span-2">
               <FeaturesCard
-                image="/ex-01.webp"
-                title="Recipe App"
-                desc=" Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea quasi delectus placeat aut obcaecati similique?"
+                icon = {<Laptop />}
+                title="Technology"
+                desc="Encompasses technological considerations, specifically database models."
               />
             </div>
             <div className="col-span-1"></div>
@@ -93,26 +94,29 @@ export default function HomePage() {
         <div className=" bg-blue-100 py-16 ">
           <div className="mx-auto max-w-screen-xl">
             <SmallHeading text="Examples" />
-            <LargeHeading text="Built with ProjectPlannerAI" />
+            <LargeHeading text="Built with QuickPlanr" />
             <div className="grid gap-10 pt-10 md:grid-cols-3">
               <ProjectsCard
                 image="/ex-01.webp"
-                title="Recipe App"
+                title="Yummly"
                 date="5 Feb 2024"
                 desc="An app to organise recipees"
+                id = "912cfd4f-f3a6-4111-868e-e771ff0cfb14"
               />
 
               <ProjectsCard
-                image="/ex-01.webp"
-                title="Recipe App"
+                image="/rentcam.png"
+                title="LensRentals"
                 date="5 Feb 2024"
-                desc="An app to organise recipees"
+                desc="a website to rent media equipment"
+                id="fd000f9c-97f3-4fda-aee0-851a53af3136"
               />
               <ProjectsCard
-                image="/ex-01.webp"
-                title="Recipe App"
+                image="/cloudkitchen.png"
+                title="AsapEats"
+                id="c8dfa1ee-06fa-443b-841f-51383641a6b9"
                 date="5 Feb 2024"
-                desc="An app to organise recipees"
+                desc="fast food business on cloud kitchen model"
               />
             </div>
           </div>
