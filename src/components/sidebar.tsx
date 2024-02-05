@@ -1,10 +1,10 @@
 import React from 'react'
+import { cn } from '~/lib/utils'
 
 
-
-const Sidebar = () => {
+const Sidebar = ({className} : {className? : string}) => {
   return (
-    <div className="w-2/12 h-screen bg-red-500">
+    <div className={cn('h-screen bg-red-500',className)} >
         sidebar
     </div>
   )
