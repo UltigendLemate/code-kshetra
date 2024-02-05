@@ -2,10 +2,11 @@ import { FC , useRef, useEffect} from 'react'
 import { Activity } from 'lucide-react'
 interface HeadingProps {
   text?  :string
-  setActive: (text: string) => void
+  icon ? : React.ReactNode
+  setActive: React.Dispatch<React.SetStateAction<string>>
 }
 
-const Heading: FC<HeadingProps> = ({text, setActive}) => {
+const Heading: FC<HeadingProps> = ({text, setActive, icon}) => {
   const headingRef = useRef(null);
 
   useEffect(() => {
@@ -36,7 +37,9 @@ const Heading: FC<HeadingProps> = ({text, setActive}) => {
   return <h2 
   ref={headingRef}
   className='text-3xl font-bold my-2'>
-    <Activity className='inline mr-3 w-7 h-7' />
+    <div className='iconProj inline '>
+    {icon ??  <Activity  />}
+    </div>
     {text ?? "Placeholder Here"}</h2>
 }
 
