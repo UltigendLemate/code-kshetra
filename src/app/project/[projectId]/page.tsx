@@ -60,6 +60,22 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
 
                     </div>
 
+                    {/* Website UI design */}
+                    <div className="rounded-md shadow-xl p-6 bg-gray-50">
+                        <Heading text="Web UI Design" />
+                        {/* <Description text={` ${proj?.target_audience}`} /> */}
+                        <div>
+
+                            <div className="grid grid-cols-4 gap-4 mt-3">
+                                <img src="/ui1.png" className="aspect-auto w-[20rem]"/>
+                                <img src="/ui2.png" className="aspect-auto w-[20rem"/>
+                                <img src="/ui3.png" className="aspect-auto w-[20rem]"/>
+                                <img src="/ui4.png" className="aspect-auto w-[20rem"/>
+                            </div>
+                        </div>
+
+                    </div>
+
                     {/* DB Schema  */}
                     <div className="rounded-md shadow-xl p-6 bg-gray-50">
                         <Heading text="Database Schema Suggestions" />

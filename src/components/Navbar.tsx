@@ -18,7 +18,7 @@ export default function Navbar() {
       <div className="flex items-center space-x-8 text-muted">
         <Link href={"/dada"} className="text-foreground">
           Login
-        </Link>
+        </Link> 
         <Button>
           <Link href={"/dada"} className="">
             Join Now
