@@ -1,3 +1,5 @@
+'use client'
+import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 import SignInButton from "~/components/SignInButton";
@@ -19,12 +21,13 @@ export default function Navbar() {
           Login
         </Link>
         <SignInButton />
-        <Link
-          href={"/dada"}
-          className="font-sem rounded-sm bg-primary px-3 py-2 hover:bg-secondary-foreground"
+        <span
+        onClick={()=>signIn('google')}
+          // href={"/dada"}
+          className="font-sem cursor-pointer rounded-sm bg-primary px-3 py-2 hover:bg-secondary-foreground"
         >
           Join Now
-        </Link>
+        </span>
       </div>
     </nav>
   );

@@ -10,10 +10,15 @@ export type Project = {
     },
     pain_points_of_user : string[],
     required_features : string[],
-    target_audience : string[],
+    target_audience : string,
     website_ui : {
         color_pallete : string[][],
         typography : string[]
     }
+    suggestes_names? : string[],
+    app_icons? : string[],
+    web_designs? : string[],
+     
+
 
 }
