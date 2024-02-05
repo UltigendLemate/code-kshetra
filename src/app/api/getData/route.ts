@@ -6,7 +6,7 @@ import {
 import { env } from "~/env.js";
 import { type Project } from "~/types/project";
 import { addNewProject } from '~/lib/queries';
-import openai from "openai";
+import { OpenAI } from "openai";
 const MODEL_NAME = "gemini-pro";
 
 const API_KEY = env.GOOGLE_AI_API;
@@ -137,18 +137,17 @@ async function run(idea : string) {
   const finalJson = JSON.parse(subs) as Project;
   return finalJson;
 }
-
+const openai = new OpenAI();
 
 async function image_generation(idea : string) {
-
-  const response = await openai.createImage({
+  const response = await openai.images.generate({
     model: "dall-e-3",
-    prompt: "logo for a company that sells " + idea,
-    n: 1,
+    prompt: "a white siamese cat",
+    n: 4,
     size: "1024x1024",
   });
-  image_url = response.data.data[0].url;
-  console.log(image_url);
+  const image_url = response.data;
+  return image_url;
 }
 
 export async function POST(req: Request) {
