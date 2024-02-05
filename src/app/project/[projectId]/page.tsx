@@ -3,7 +3,7 @@
 import { signIn, signOut } from "next-auth/react"
 import { useEffect, useState } from "react"
 import { set } from "zod"
-import Sidebar from "~/components/Sidebar"
+import Sidebar from "~/components/sidebar"
 import Description from "~/components/project/Description"
 import Heading from "~/components/project/Heading"
 import Overview from "~/components/project/Overview"
@@ -33,7 +33,7 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
     return (
         <>
             <div className="bg-blue-200 h-full flex w-full relative">
-                <Sidebar className="w-1/5 p-6" />
+                <Sidebar classNames="w-1/5 p-6" />
 
 
 

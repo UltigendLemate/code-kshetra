@@ -1,13 +1,12 @@
 'use client'
-import { signIn, useSession } from "next-auth/react";
-import Link from "next/link";
+import { signIn } from "next-auth/react";
 import React from "react";
 import SignInButton from "~/components/SignInButton";
 
 
 export default function Navbar() {
   return (
-    <nav className="montserrat flex h-[60px] items-center  justify-between border-b border-b-border bg-background px-32 shadow-sm">
+    <nav className="z-50 relative bg-white flex h-[60px] items-center justify-between border-b border-b-border px-32 shadow-sm">
       <div className="">
         <ul className="flex items-center space-x-8 text-sm text-muted-foreground">
           <li className="text-2xl font-semibold text-primary">LOGO</li>

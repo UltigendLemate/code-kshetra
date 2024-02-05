@@ -3,9 +3,9 @@ import { cn } from '~/lib/utils'
 import SidebarHeading from './SidebarHeading';
 import { Store, Target, LayoutPanelLeft, Database, CaseLower, Paintbrush, User, SlidersHorizontal, Building} from 'lucide-react'
 
-const Sidebar = ({className} : {className? : string}) => {
+const Sidebar = ({classNames} : {classNames? : string}) => {
   return (
-    <div className={cn('sticky top-0 left-0 block overflow-y-scroll bg-white space-y-4 text-left',className)} >
+    <div className='sidebar space-y-4 text-left p-5  ' >
         <div className="h-fit text-4xl font-bold">
           QuikPlanr
         </div>
@@ -39,6 +39,16 @@ const Sidebar = ({className} : {className? : string}) => {
             </h1>
           </div>
           <SidebarHeading text="User Dynamics" />
+          <div className="flex flex-col">
+            <h1 className="text-md px-[0.7rem] py-[0.4rem] flex">
+            < User className="p-[0.2rem]" /> User Pain Point
+            </h1>
+            <h1 className="text-md px-[0.7rem] py-[0.4rem] flex">
+            < SlidersHorizontal className="p-[0.2rem]" /> Required Features
+            </h1>
+          </div>
+          <SidebarHeading text="Competitive Landscape" />
+          <SidebarHeading text="Industry Insights" />
           <div className="flex flex-col">
             <h1 className="text-md px-[0.7rem] py-[0.4rem] flex">
             < User className="p-[0.2rem]" /> User Pain Point

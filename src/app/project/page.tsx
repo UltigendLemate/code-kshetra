@@ -39,8 +39,6 @@ export default function Project(){
         <>
         <main className="h-screen w-screen align-middle flex">
 <div className="text-4xl text-center font-bold w-1/3 mx-auto py-[5vh] h-fit">
-    {/* Generate <span className="text-blue-400">Business Plans</span> at the <span className="text-blue-400">speed of light</span> */}
-
     <img src="/input.gif" className="w-4/5 aspect-auto m-auto" />
 </div>
 <div 
@@ -67,9 +65,6 @@ className="w-[50vw] max-h-fit m-auto h-fit border-spacing-6 rounded-lg p-[2vw] b
     </Form>
     </div>
         </main>
-        {/* <Button onClick={()=>addProj()}>
-            click
-        </Button> */}
         {isLoading && <h1>loading</h1>}
         </>
     )
