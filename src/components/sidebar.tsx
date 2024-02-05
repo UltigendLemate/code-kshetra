@@ -1,8 +1,10 @@
 import React from 'react'
 
+
+
 const Sidebar = () => {
   return (
-    <div className="min-w-2/5 h-screen bg-red-500">
+    <div className="w-2/12 h-screen bg-red-500">
         sidebar
     </div>
   )
