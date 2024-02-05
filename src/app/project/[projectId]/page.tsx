@@ -22,6 +22,7 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
             setIsLoading(true)
             const res = await getProject(params.projectId);
             const jsonProj = JSON.parse(res?.data ?? "") as Project
+            console.log(jsonProj)
             setProj(jsonProj)
             setIdea(res?.idea ?? "")
             setIsLoading(false)
