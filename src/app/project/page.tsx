@@ -29,6 +29,7 @@ const formSchema = z.object({
 
 export default function Project(){
     const [loading, setLoading] = useState(false)
+    
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -82,7 +83,7 @@ className="w-[50vw] max-h-fit m-auto border-spacing-6 rounded-lg p-[5vw] bg-whit
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         {!loading ? <FormField
           control={form.control}
-          name="username"
+          name="idea"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-lg">Enter Idea</FormLabel>
