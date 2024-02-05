@@ -6,7 +6,12 @@
 * {
   font-family: "Montserrat", sans-serif;
 }
-
+.loading-parent {
+  height: 100vh !important;
+}
+.loading-child {
+  height: 50vh !important;
+}
 @layer base {
   :root {
     --background: 0 0% 100%;

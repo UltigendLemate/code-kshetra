@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import { Button } from "~/components/ui/button";
 
 export default function Navbar() {
   return (
@@ -16,12 +17,11 @@ export default function Navbar() {
         <Link href={"/dada"} className="text-foreground">
           Login
         </Link>
-        <Link
-          href={"/dada"}
-          className="font-sem rounded-sm bg-primary px-3 py-2 hover:bg-secondary-foreground"
-        >
-          Join Now
-        </Link>
+        <Button>
+          <Link href={"/dada"} className="">
+            Join Now
+          </Link>
+        </Button>
       </div>
     </nav>
   );
