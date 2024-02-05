@@ -27,13 +27,16 @@ export default async function RootLayout({
   const session = await getServerSession(authOptions)
   return (
     <html lang="en">
-      <Provider session={session}>
-      <body className={``}>
-        <Navbar />
-        {children}
+      <link rel="preconnect" href="https://fonts.googleapis.com"/>
+        <link rel="preconnect" href="https://fonts.gstatic.com"/>
+          <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet"/>
+          <Provider session={session}>
+            <body className={``}>
+              <Navbar />
+              {children}
         {/* <Footer /> */}
-      </body>
-      </Provider>
-    </html>
-  );
+            </body>
+          </Provider>
+        </html>
+        );
 }

@@ -44,8 +44,8 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
 
   return (
     <>
-      <div className="flex h-full w-full bg-blue-200">
-        <Sidebar className="w-1/5 p-6" />
+      <div className="flex h-full w-full bg-blue-200 relative">
+        <Sidebar classNames="w-1/5 p-6" />
 
         <div className="flex w-4/5 flex-col gap-5 bg-muted p-6 shadow-lg shadow-black">
           <h2 className="p-5 text-2xl font-semibold capitalize ">{idea}</h2>
@@ -66,9 +66,9 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-1 items-center gap-4">
           <Button 
-          onClick={() => {
+          // onClick={() => {
 
-          }}
+          // }}
           type="submit">Extrapolate this data with latest research till 2023</Button>
           <Button type="submit">Expand the given answer for me to understand with ease</Button>
           <Button type="submit">Provide a brief summary and explain this data in short</Button>
