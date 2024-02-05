@@ -1,11 +1,9 @@
 'use client'
-
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { set } from "zod"
 import { Button } from "~/components/ui/button"
 import { addNewProject } from "~/lib/queries"
-import { Project } from "~/types/project"
+import { type Project } from "~/types/project"
 
 export default function Project(){
     const [proj, setProj] = useState<Project>()
