@@ -70,6 +70,7 @@
     background: white;
 }
 .sidebar{
+  z-index: -10;
   @apply fixed w-1/5 p-6 top-0 pt-[80px] bottom-0 overflow-y-scroll left-0 block h-screen ;
 }
 
