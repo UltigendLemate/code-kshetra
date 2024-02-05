@@ -1,5 +1,5 @@
 export type Project = {
-    overview: ?string,
+    overview?: string,
     big_brands : string[],
     database_schema : {
         category : string,

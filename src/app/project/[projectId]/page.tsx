@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
-
 import { signIn, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { set } from "zod";
@@ -13,7 +12,7 @@ import { Button } from "~/components/ui/button";
 import { getProject } from "~/lib/queries";
 import { cn } from "~/lib/utils";
 import { type Project } from "~/types/project";
-import {Wand2} from 'lucide-react'
+import {ArrowBigUpDash, BookCheck, Bug, CaseSensitive, DatabaseZap, Palette, Wand2, Users} from 'lucide-react'
 import {
   Dialog,
   DialogContent,
@@ -60,7 +59,7 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
       <div className="flex h-full w-full bg-blue-200 relative">
         <Sidebar active={active} />
         <div className="flex w-4/5 flex-col gap-5 bg-muted p-6 shadow-lg shadow-black absolute right-0">
-          <h2 className="p-5 text-2xl font-semibold capitalize ">{idea}</h2>
+          <h2 className="px-5  text-2xl font-semibold capitalize ">{idea}</h2>
           <div className="rounded-md bg-gray-50 p-6 shadow-xl relative">
           <Dialog >
       <DialogTrigger asChild>
@@ -178,7 +177,7 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
     </Dialog>
 
 
-            <Heading setActive={setActive} text="Target Audience" />
+            <Heading icon={<Users />} setActive={setActive} text="Target Audience" />
             <div>
               {!isLoading && <p className="text-md ">Your key target audience includes :</p>}
               <div className="flex gap-4 flex-wrap">
@@ -246,7 +245,7 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
         </div>
       </DialogContent>
     </Dialog>
-            <Heading setActive={setActive} text="Database Schema Suggestions" />
+            <Heading icon={<DatabaseZap />} setActive={setActive} text="Database Schema Suggestions" />
             {/* <Description text={` ${proj?.target_audience}`} /> */}
             <div>
               <div className="mt-3 grid grid-cols-4 gap-4">
@@ -315,7 +314,7 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
         </div>
       </DialogContent>
     </Dialog>
-            <Heading setActive={setActive} text="Typography Suggestions" />
+            <Heading icon={<CaseSensitive />} setActive={setActive} text="Typography Suggestions" />
             {/* <Description text={` ${proj?.target_audience}`} /> */}
             <div>
               <div className="mt-3 grid  grid-cols-2 gap-4">
@@ -381,7 +380,7 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
         </div>
       </DialogContent>
     </Dialog>
-            <Heading setActive={setActive} text="Color Palette Suggestions" />
+            <Heading icon={<Palette />} setActive={setActive} text="Color Palette Suggestions" />
             {/* <Description text={` ${proj?.target_audience}`} /> */}
             <div>
               <div className="mt-3 flex flex-col gap-4">
@@ -457,7 +456,7 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
         </div>
       </DialogContent>
     </Dialog>
-            <Heading setActive={setActive} text="Pain Points of Users" />
+            <Heading icon={<Bug />} setActive={setActive} text="Pain Points of Users" />
             {/* <Description text={` ${proj?.target_audience}`} /> */}
             <div>
               <div className="mt-3 flex flex-col gap-4">
@@ -518,7 +517,7 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
         </div>
       </DialogContent>
     </Dialog>
-            <Heading setActive={setActive} text="Required Features" />
+            <Heading icon={<BookCheck/>} setActive={setActive} text="Required Features" />
             <div>
               <div className="mt-3 flex flex-col gap-4">
                 {isLoading || !proj
@@ -579,7 +578,7 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
       </DialogContent>
     </Dialog>
             <div>
-              <Heading setActive={setActive} text="Big Brands" />
+              <Heading icon={<ArrowBigUpDash />} setActive={setActive} text="Your Competitors" />
               <p>Brands that dominate similar or this particular domain(s)</p>
             </div>
             {/* <Description text={` ${proj?.target_audience}`} /> */}
