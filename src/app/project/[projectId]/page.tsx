@@ -32,12 +32,12 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
 
     return (
         <>
-            <div className="bg-blue-200 h-full flex w-full">
+            <div className="bg-blue-200 h-full flex w-full relative">
                 <Sidebar className="w-1/5 p-6" />
 
 
 
-                <div className="w-4/5 bg-muted p-6 shadow-lg shadow-black flex flex-col gap-5">
+                <div className="w-4/5 bg-muted p-6 shadow-lg shadow-black flex flex-col gap-5 absolute right-0">
                     <h2 className="p-5 font-semibold text-2xl capitalize ">{idea}</h2>
                     <div className="rounded-md shadow-xl p-6 bg-gray-50">
                         <Heading text="Overview" />
