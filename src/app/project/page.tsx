@@ -23,8 +23,9 @@ export default function Project() {
     setIsLoading(true)
     const respone = await axios.post('/api/getData', { idea: values });
     console.log(respone)
-    const res = respone.data.res as Project;
-    const id = respone.data.id as string;
+    const data = respone.data as { res: Project, id: string };
+    const res = data.res;
+    const id = data.id;
     setProj(res)
     console.log(res)
     router.push(`/project/${id}`)

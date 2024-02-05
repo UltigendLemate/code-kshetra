@@ -13,7 +13,7 @@ export default function Footer() {
         href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css"
       />
       <footer className="relative bg-background pb-6 pt-8 text-foreground">
-        <div className="container mx-auto px-4">
+        {/* <div className="container mx-auto px-4">
           <div className="flex flex-wrap text-left lg:text-left">
             <div className="w-full px-4 lg:w-6/12">
               <h4 className="fonat-semibold text-3xl text-foreground">
@@ -155,7 +155,7 @@ export default function Footer() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </footer>
     </>
   );
