@@ -47,12 +47,13 @@ async function run(idea : string) {
     
     NOTE : before suggesting answer for each of these requirements think what is the audience for the product, what should be the tone of the company while marketing it's product, should the business be more creative or professional in it's approach to attract customers. 
     
+    - overview of the business idea, what is the business idea, what is the problem it is solving, what is the USP of the business
     - target audience ( make a list of target audience, seperated by commas, atleat 4)
     -suggested names for the business (total number of suggestions should be in mutliples of 4)
     - current industry trends in India and in US/Europe
     - primary pain points of users in this domain, atleast 4 pain points in an array
     - the database schema structure for the business in this domain, create this schema in seperate tables for each property. 
-    - suggested typography [ suggest 2-4 typographies for each business idea, pertaining to the fact how much professional / goofy / kinky the idea is ] , and color scheme [ give atleast 2 color palletes, with 5 colors in each, each color palette should be the shades of exactly 2 colors! ] for application/website
+    - suggested typography [ suggest 2-4 typographies for each business idea, pertaining to the fact how much professional / goofy / kinky the idea is ] , and color scheme [ recommend atleast 2 color palletes with 5 colors each and in each color pallete should be of only one color with subsequent colors in pallete having an opacity of -20% each ] for application/website
     - a list of required features in the prototype [ atleast recommend 4 features which a business should offer to its users ]
     - suggest some big brands who are already key players in this domain, and help entrepreneur understand the competitive landscape of the industry in which they want to venture, for example Airbnb, Trivago, makemytrip is for hotel booking, Zomato, Swiggy, Uber eats for food delivery, Hindustan Unilever for FMCG products, and think of all other huge MNCs who can help us in understanding the industry.  atleast 3 competition brands.
     
@@ -63,6 +64,7 @@ async function run(idea : string) {
     Generate response in JSON format, like below: 
     
     output : {
+    overview : "", 
     target_audience : "" , 
     // target audience is a string of minimum 5 target audience seperated by commas.
     industry_trends : {
@@ -137,18 +139,20 @@ async function run(idea : string) {
   const finalJson = JSON.parse(subs) as Project;
   return finalJson;
 }
-const openai = new OpenAI();
 
-async function image_generation(idea : string) {
-  const response = await openai.images.generate({
-    model: "dall-e-3",
-    prompt: "a white siamese cat",
-    n: 4,
-    size: "1024x1024",
-  });
-  const image_url = response.data;
-  return image_url;
-}
+
+// const openai = new OpenAI();
+
+// async function image_generation(idea : string) {
+//   const response = await openai.images.generate({
+//     model: "dall-e-3",
+//     prompt: "a white siamese cat",
+//     n: 4,
+//     size: "1024x1024",
+//   });
+//   const image_url = response.data;
+//   return image_url;
+// }
 
 export async function POST(req: Request) {
   try{

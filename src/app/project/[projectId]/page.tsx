@@ -12,6 +12,16 @@ import { Button } from "~/components/ui/button";
 import { getProject } from "~/lib/queries";
 import { cn } from "~/lib/utils";
 import { type Project } from "~/types/project";
+import {Pen} from 'lucide-react'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "~/components/ui/dialog"
 
 export default function ProjectPage({ params }: { params: { projectId: string } }) {
     const [proj, setProj] = useState<Project>()
@@ -39,7 +49,43 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
 
         <div className="flex w-4/5 flex-col gap-5 bg-muted p-6 shadow-lg shadow-black">
           <h2 className="p-5 text-2xl font-semibold capitalize ">{idea}</h2>
-          <div className="rounded-md bg-gray-50 p-6 shadow-xl">
+          <div className="rounded-md bg-gray-50 p-6 shadow-xl relative">
+          <Dialog className="">
+      <DialogTrigger asChild>
+        <Button 
+        className="absolute right-5 top-5"
+        variant="outline"><Pen/></Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Edit with AI</DialogTitle>
+          <DialogDescription>
+            Select the option you want and let the AI give you tailored answers
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-1 items-center gap-4">
+          <Button 
+          onClick={() => {
+
+          }}
+          type="submit">Extrapolate this data with latest research till 2023</Button>
+          <Button type="submit">Expand the given answer for me to understand with ease</Button>
+          <Button type="submit">Provide a brief summary and explain this data in short</Button>
+            {/* <Label htmlFor="name" className="text-right">
+              Name
+            </Label>
+            <Input id="name" value="Pedro Duarte" className="col-span-3" /> */}
+          </div>
+        </div>
+        <DialogFooter>
+          <Button type="submit">Save changes</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+            {/* <button >
+              
+            </button> */}
             <Heading text="Overview" />
             {isLoading || !proj ? (
               <div className="space-y-2">
