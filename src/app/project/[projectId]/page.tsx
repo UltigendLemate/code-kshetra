@@ -22,14 +22,14 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
             setIsLoading(true)
             const res = await getProject(params.projectId);
             const jsonProj = JSON.parse(res?.data ?? "") as Project
-            console.log(jsonProj)
+            console.log("fetchproj",jsonProj)
             setProj(jsonProj)
             setIdea(res?.idea ?? "")
             setIsLoading(false)
         }
         void fetchProject();
     }, [])
-    console.log(proj)
+    console.log("proj printing", proj)
 
     return (
         <>

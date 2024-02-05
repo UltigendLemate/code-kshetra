@@ -57,3 +57,13 @@
 .loadingImage{
   min-height: 300px !important;
 }
+
+.mainLoader{
+  position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    z-index: 20;
+    height: 100vh;
+    background: white;
+}

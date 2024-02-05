@@ -31,11 +31,6 @@ export const addNewProject = async (newProject: Project, idea: string) => {
 
 export const getProject = async (id : string) => {
   try {
-    // const session = await getServerSession(authOptions);
-    // if (!session) {
-    //   throw new Error("You must be logged in to view projects");
-    // }
-    // Get all the projects from the database
     const res = await db.query.project.findFirst({
       where(fields, operators) {
           return eq(fields.id, id );

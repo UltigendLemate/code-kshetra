@@ -28,7 +28,7 @@ export default function Waiting() {
   }, [slide]);
 
   return (
-    <div className=" flex items-center justify-center h-screen">
+    <div className="mainLoader flex items-center justify-center h-screen">
       <div className="h-1/2 grid w-full">
         <div className="loadingImage object-contain relative flex flex-col justify-end items-center">
         <Image

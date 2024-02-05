@@ -29,7 +29,7 @@ export default async function RootLayout({
     <html lang="en">
       <Provider session={session}>
       <body className={``}>
-        {/* <Navbar /> */}
+        <Navbar />
         {children}
         {/* <Footer /> */}
       </body>

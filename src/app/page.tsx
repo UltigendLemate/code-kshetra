@@ -13,7 +13,6 @@ export default function HomePage() {
   return (
     <main className="h-full">
       <div className="">
-        <Navbar />
         {/* hero section */}
         <div className="pt-20 text-center">
           <div>
