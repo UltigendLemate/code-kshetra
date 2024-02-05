@@ -53,3 +53,7 @@
     --ring: 224.3 76.3% 48%;
   }
 }
+
+.loadingImage{
+  min-height: 300px !important;
+}

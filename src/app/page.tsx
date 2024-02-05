@@ -1,12 +1,20 @@
+"use client";
 import Link from "next/link";
-import SignInButton from "~/components/SignInButton";
-import { Button } from "~/components/ui/button"
-import {} from "module";
+import SmallHeading from "~/components/SmallHeading";
+import LargeHeading from "~/components/LargeHeading";
+import { Button } from "~/components/ui/button";
+import ProjectsCard from "~/components/ProjectsCard";
+import FeaturesCard from "~/components/FeeaturesCard";
+import Navbar from "~/components/Navbar";
+import Footer from "~/components/Footer";
+import Waiting from "~/components/Waiting";
 
 export default function HomePage() {
   return (
     <main className="h-full">
-      <div className="mx-auto max-w-screen-xl">
+      <div className="">
+        <Navbar />
+        {/* hero section */}
         <div className="pt-20 text-center">
           <div>
             <h1 className="text-6xl font-bold">
@@ -24,16 +32,93 @@ export default function HomePage() {
             <h6 className=" text-xl text-muted-foreground">
               design elements and product features for your idea in minutes.
             </h6>
-            <Link href={"/dada"} className="flex justify-center">
-              <h6 className="font-sem mt-4 max-w-fit rounded-sm bg-primary px-3 py-2 text-muted hover:bg-secondary-foreground">
+            <Button className="mt-4">
+              <Link href={"/project"} className="flex justify-center">
                 Generate my project plan
-              </h6>
-            </Link>
+              </Link>
+            </Button>
           </div>
         </div>
 
         {/* video div starts  */}
-        <div className="my-20 h-[90vh] rounded-3xl border-[12px] border-border"></div>
+        <div className="mx-auto my-20 h-[90vh] max-w-screen-xl rounded-3xl border-[12px] border-border"></div>
+
+        {/* features section */}
+        <div className="mx-auto max-w-screen-xl pb-20 pt-10">
+          <SmallHeading text="Features" />
+          <LargeHeading text="Save Hours of researching" />
+          <div className="grid grid-cols-6 gap-10 pt-10">
+            <div className="col-span-2">
+              <FeaturesCard
+                image="/ex-01.webp"
+                title="Recipe App"
+                desc=" Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea quasi delectus placeat aut obcaecati similique?"
+              />
+            </div>
+            <div className="col-span-2">
+              <FeaturesCard
+                image="/ex-01.webp"
+                title="Recipe App"
+                desc=" Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea quasi delectus placeat aut obcaecati similique?"
+              />
+            </div>
+            <div className="col-span-2">
+              <FeaturesCard
+                image="/ex-01.webp"
+                title="Recipe App"
+                desc=" Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea quasi delectus placeat aut obcaecati similique?"
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-6 gap-10 pt-10">
+            <div className="col-span-1"></div>
+            <div className="col-span-2">
+              <FeaturesCard
+                image="/ex-01.webp"
+                title="Recipe App"
+                desc=" Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea quasi delectus placeat aut obcaecati similique?"
+              />
+            </div>
+            <div className="col-span-2">
+              <FeaturesCard
+                image="/ex-01.webp"
+                title="Recipe App"
+                desc=" Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea quasi delectus placeat aut obcaecati similique?"
+              />
+            </div>
+            <div className="col-span-1"></div>
+          </div>
+        </div>
+
+        {/* examples section */}
+        <div className=" bg-blue-100 py-16 ">
+          <div className="mx-auto max-w-screen-xl">
+            <SmallHeading text="Examples" />
+            <LargeHeading text="Built with ProjectPlannerAI" />
+            <div className="grid gap-10 pt-10 md:grid-cols-3">
+              <ProjectsCard
+                image="/ex-01.webp"
+                title="Recipe App"
+                date="5 Feb 2024"
+                desc="An app to organise recipees"
+              />
+
+              <ProjectsCard
+                image="/ex-01.webp"
+                title="Recipe App"
+                date="5 Feb 2024"
+                desc="An app to organise recipees"
+              />
+              <ProjectsCard
+                image="/ex-01.webp"
+                title="Recipe App"
+                date="5 Feb 2024"
+                desc="An app to organise recipees"
+              />
+            </div>
+          </div>
+        </div>
+        <Footer />
       </div>
     </main>
   );

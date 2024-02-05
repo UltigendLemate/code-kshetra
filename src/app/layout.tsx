@@ -1,10 +1,12 @@
 import "~/styles/globals.css";
 import Navbar from "~/components/Navbar";
+import Footer from "~/components/Footer";
 import { Inter } from "next/font/google";
 import { getServerSession } from "next-auth";
 import { authOptions } from "~/server/auth";
 import Provider from "./context/Provider";
 import { Montserrat } from "next/font/google";
+import { Loader, Loader2 } from "lucide-react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -27,8 +29,9 @@ export default async function RootLayout({
     <html lang="en">
       <Provider session={session}>
       <body className={``}>
-        <Navbar />
+        {/* <Navbar /> */}
         {children}
+        {/* <Footer /> */}
       </body>
       </Provider>
     </html>
