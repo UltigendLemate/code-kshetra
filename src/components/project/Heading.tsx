@@ -2,6 +2,7 @@ import { FC , useRef, useEffect} from 'react'
 import { Activity } from 'lucide-react'
 interface HeadingProps {
   text?  :string
+  setActive: (text: string) => void
 }
 
 const Heading: FC<HeadingProps> = ({text, setActive}) => {
@@ -12,7 +13,7 @@ const Heading: FC<HeadingProps> = ({text, setActive}) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           console.log(text);
-          setActive(text);
+          setActive(text!);
         }
       });
     }, {
