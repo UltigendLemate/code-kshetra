@@ -1,7 +1,7 @@
 import React from 'react'
 import { cn } from '~/lib/utils'
 import SidebarHeading from './SidebarHeading';
-import { Store, Target, LayoutPanelLeft, Database, CaseLower, Paintbrush, User, SlidersHorizontal, Building} from 'lucide-react'
+import { Store, Target, LayoutPanelLeft, Database, CaseLower, Paintbrush, User, SlidersHorizontal, Building, Factory} from 'lucide-react'
 
 const Sidebar = ({classNames} : {classNames? : string}) => {
   return (
@@ -58,7 +58,17 @@ const Sidebar = ({classNames} : {classNames? : string}) => {
             </h1>
           </div>
           <SidebarHeading text="Competitive Landscape" />
+          <div className="flex flex-col">
+            <h1 className="text-md px-[0.7rem] py-[0.4rem] flex">
+            < Building className="p-[0.2rem]" /> Brands
+            </h1>
+          </div>
           <SidebarHeading text="Industry Insights" />
+          <div className="flex flex-col">
+            <h1 className="text-md px-[0.7rem] py-[0.4rem] flex">
+            < Factory className="p-[0.2rem]" /> Industry Insights
+            </h1>
+          </div>
         </div>
     </div>
   )

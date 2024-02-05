@@ -192,13 +192,6 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
                           >
                             {aud}
                           </h4>
-
-                          <p
-                            className="truncate text-xl"
-                            style={{ fontFamily: aud }}
-                          >
-                            abcdefghijklmnopqrstuvwxyzABCDEFGHJIKLMNOPQRSTUVWXYZ
-                          </p>
                         </div>
                       );
                     })}
