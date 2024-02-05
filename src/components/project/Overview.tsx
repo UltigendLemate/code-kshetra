@@ -7,7 +7,7 @@ interface OverviewProps {
 const Overview: FC<OverviewProps> = ({overview}) => {
   return <div>
     <h1 className='text-5xl'>Overview</h1>
-    <p>{overview ?? "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Reprehenderit error nisi veniam quam perferendis quaerat placeat dolor earum quae debitis?"}</p>
+    <p>{overview ?? "AI has synthesized a business plan from your idea, scroll below and check out the results!"}</p>
   </div>
 }
 
