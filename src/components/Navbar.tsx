@@ -26,17 +26,14 @@ export default function Navbar() {
       <div className="">
         {session?.data?.user ? (
           <div className="flex items-center space-x-5">
-            <div className="bord flex space-x-2 rounded-md border-border p-2 cursor-pointer text-yellow-500">
-              <p className="text-base text-primary">
-                10 Credits
-              </p>
+            <div className="bord flex cursor-pointer space-x-2 rounded-md border-border p-2 text-yellow-500">
+              <p className="text-base text-primary">10 Credits</p>
               <Coins />
             </div>
             <Avatar>
-      <AvatarImage src={session.data.user.image} alt="pfp" />
-      <AvatarFallback>CN</AvatarFallback>
-    </Avatar>
-
+              <AvatarImage src={`${session.data.user.image}`} alt="pfp" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
           </div>
         ) : (
           <div className="flex items-center space-x-8 text-muted">
