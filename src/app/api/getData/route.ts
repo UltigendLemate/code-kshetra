@@ -5,13 +5,13 @@ import {
 } from "@google/generative-ai";
 import { env } from "~/env.js";
 import { type Project } from "~/types/project";
-import { addNewProject } from '~/lib/queries';
+import { addNewProject } from "~/lib/queries";
 import { OpenAI } from "openai";
 const MODEL_NAME = "gemini-pro";
 
 const API_KEY = env.GOOGLE_AI_API;
 
-async function run(idea : string) {
+async function run(idea: string) {
   const genAI = new GoogleGenerativeAI(API_KEY);
   const model = genAI.getGenerativeModel({ model: MODEL_NAME });
   const generationConfig = {
@@ -41,7 +41,8 @@ async function run(idea : string) {
   ];
 
   const parts = [
-    {text: `prompt - You are a Product Manager at a MNC and you are given a task to make a full blown project structure for a given idea which is {idea}
+    {
+      text: `prompt - You are a Product Manager at a MNC and you are given a task to make a full blown project structure for a given idea which is {idea}
 
     Develop a plan which consist of - 
     
@@ -89,6 +90,7 @@ async function run(idea : string) {
     // object array with different color codes as strings, 
     ],
     ], 
+    suggested_names : array of strings
     
     required_features : [
      " ", 
@@ -123,9 +125,10 @@ async function run(idea : string) {
             color_pallete : string[][],
             typography : string[]
         }
-        suggestes_names : string[],
+        suggested_names : string[],
     }
-    the json should not contain any non json parsable character.  it should strictly follow the given type Project. name the properties exactly the same. no spelling mistake should be there. check 2 times`},
+    the json should not contain any non json parsable character.  it should strictly follow the given type Project. name the properties exactly the same. no spelling mistake should be there. check 2 times`,
+    },
   ];
 
   const result = await model.generateContent({
@@ -135,11 +138,12 @@ async function run(idea : string) {
   });
 
   const response = result.response.text();
-  const subs = response.substring(7,response.length-3).replace(/[^\{\}\[\]\w\s,":]/g, '');
+  const subs = response
+    .substring(7, response.length - 3)
+    .replace(/[^\{\}\[\]\w\s,":]/g, "");
   const finalJson = JSON.parse(subs) as Project;
   return finalJson;
 }
-
 
 // const openai = new OpenAI();
 
@@ -155,24 +159,21 @@ async function run(idea : string) {
 // }
 
 export async function POST(req: Request) {
-  try{
-      const {idea}  = await req.json() as {idea : string};
-      console.log(idea);
-        const res = await run(idea);
-        console.log(res);
-        // res.images = await image_generation(idea);
-        // const stringified_json = JSON.stringify(res);
-        
-        if(res) {
-          console.log("Adding new project")
-          await addNewProject(res, idea)
-        }
-        console.log("it must be added now")
-        return new Response(JSON.stringify(res), {status: 200});
-  }
-  catch(error){
-    console.log(error);
-        return new Response(JSON.stringify(error),{status:500});
-  }
+  try {
+    const { idea } = (await req.json()) as { idea: string };
+    console.log(idea);
+    const res = await run(idea);
+    console.log(res);
+    // res.images = await image_generation(idea);
+    // const stringified_json = JSON.stringify(res);
 
+    console.log("Adding new project");
+    const id = await addNewProject(res, idea);
+
+    console.log("it must be added now");
+    return new Response(JSON.stringify({ res, id }), { status: 200 });
+  } catch (error) {
+    console.log(error);
+    return new Response(JSON.stringify(error), { status: 500 });
+  }
 }

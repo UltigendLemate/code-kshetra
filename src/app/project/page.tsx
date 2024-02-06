@@ -1,40 +1,54 @@
 "use client"
-
-
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../../components/ui/form"
 import { Input } from "../../components/ui/input"
 import { AiOutlineLoading } from 'react-icons/ai';
 
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Button } from "~/components/ui/button"
-import { addNewProject } from "~/lib/queries"
 import { type Project } from "~/types/project"
 import Waiting from "~/components/Waiting";
+import { useRouter } from "next/navigation";
+async function callApiWithRetry(values : string, options = {}) {
+  const maxRetries = 3;
+  let retryCount = 0;
+
+  while (retryCount < maxRetries) {
+    try {
+      const response = await axios.post('/api/getData', { idea: values });
+
+      return response;
+    } catch (error) {
+      retryCount++;
+      const delay = Math.pow(2, retryCount) * 1000; // Exponential backoff
+      console.error(`API call failed, retrying in ${delay}ms...`);
+      await new Promise(resolve => setTimeout(resolve, delay));
+    }
+  }
+
+  throw new Error(`API call failed after ${maxRetries} attempts`);
+}
+
 
 
 export default function Project() {
+  const router = useRouter();
   const [idea, setIdea] = useState('')
   // const [loading, setLoading] = useState(false)
   const [proj, setProj] = useState<Project>()
   const [isLoading, setIsLoading] = useState(false)
 
-
+  // JSON.stringify({ data: res, id })
   const givePrompt = async (values: string) => {
     console.log(values)
     setIsLoading(true)
-    const res = await axios.post('/api/getData', { idea: values });
-    setProj(res.data as Project)
-    console.log(res.data)
-    setIsLoading(false)
+    const respone = await callApiWithRetry(values);
+    console.log(respone)
+    const data = respone.data as { res: Project, id: string };
+    const res = data.res;
+    const id = data.id;
+    setProj(res)
+    console.log(res)
+    router.push(`/project/${id}`)
   }
   return (
     <>

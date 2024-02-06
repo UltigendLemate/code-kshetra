@@ -1,16 +1,21 @@
 import "~/styles/globals.css";
 import Navbar from "~/components/Navbar";
 import Footer from "~/components/Footer";
-import { Inter } from "next/font/google";
+import { Inter, Montserrat } from "next/font/google";
 import { getServerSession } from "next-auth";
 import { authOptions } from "~/server/auth";
 import Provider from "./context/Provider";
-import { Montserrat } from "next/font/google";
+
 import { Loader, Loader2 } from "lucide-react";
+import Head from "next/head";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
+});
+const mont = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-serif",
 });
 
 export const metadata = {
@@ -27,16 +32,13 @@ export default async function RootLayout({
   const session = await getServerSession(authOptions)
   return (
     <html lang="en">
-      <link rel="preconnect" href="https://fonts.googleapis.com"/>
-        <link rel="preconnect" href="https://fonts.gstatic.com"/>
-          <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet"/>
-          <Provider session={session}>
-            <body className={``}>
-              <Navbar />
-              {children}
-        {/* <Footer /> */}
-            </body>
-          </Provider>
-        </html>
-        );
+      <Provider session={session}>
+        <body className={mont.className}>
+          <Navbar />
+          {children}
+          {/* <Footer /> */}
+        </body>
+      </Provider>
+    </html>
+  );
 }

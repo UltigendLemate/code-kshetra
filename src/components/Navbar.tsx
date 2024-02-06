@@ -5,6 +5,7 @@ import React from "react";
 import { Button } from "~/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Coins } from "lucide-react";
+import { sessionsRelations } from "~/server/db/schema";
 
 export default function Navbar() {
   const session = useSession();
@@ -15,7 +16,7 @@ export default function Navbar() {
       <div className="">
         <ul className="flex items-center space-x-8 text-sm text-muted-foreground">
           <li className="text-2xl font-semibold text-primary">
-            <Link href={"/"}>QUIK PLANR</Link>
+            <Link href={"/"}>QuikPlanr</Link>
           </li>
           <li className="cursor-pointer">How it works</li>
           <li className="cursor-pointer">Pricing</li>
@@ -25,18 +26,13 @@ export default function Navbar() {
       <div className="">
         {session?.data?.user ? (
           <div className="flex items-center space-x-5">
-            <div className="bord flex space-x-2 rounded-md border-border p-2 text-yellow-500">
-              <p className="text-base font-extrabold text-primary">
-                10 Credits
-              </p>
+            <div className="bord flex cursor-pointer space-x-2 rounded-md border-border p-2 text-yellow-500">
+              <p className="text-base text-primary">10 Credits</p>
               <Coins />
             </div>
-
-            <Avatar className="cursor-pointer">
-              {/* @ts-ignore */}
-              <AvatarImage src={`${session.data.user.image}`} />
-              {/* @ts-ignore */}
-              <AvatarFallback>{session.data.user.name}</AvatarFallback>
+            <Avatar>
+              <AvatarImage src={`${session.data.user.image}`} alt="pfp" />
+              <AvatarFallback>CN</AvatarFallback>
             </Avatar>
           </div>
         ) : (

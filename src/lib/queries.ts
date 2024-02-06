@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 'use server'
 import { getServerSession } from "next-auth";
 import { authOptions } from "~/server/auth";
@@ -14,13 +16,14 @@ export const addNewProject = async (newProject: Project, idea: string) => {
       throw new Error("You must be logged in to add a new project");
     }
     // Add the project to the database
-    const uid = uuidv4() as string;
+    const uid = uuidv4();
     await db.insert(project).values({
       id: uid,
       idea: idea,
       data: JSON.stringify(newProject),
       createdById: session.user.id,
     });
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return uid;
   } catch (error) {
     console.error(error);

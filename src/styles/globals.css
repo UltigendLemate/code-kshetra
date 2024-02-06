@@ -3,8 +3,10 @@
 @tailwind utilities;
 
 @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
+
 * {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-serif)
 }
 
 @layer base {
@@ -63,11 +65,12 @@
     left: 0;
     top: 0;
     width: 100vw;
-    z-index: 20;
+    z-index: 1000;
     height: 100vh;
     background: white;
 }
 .sidebar{
+  z-index: -10;
   @apply fixed w-1/5 p-6 top-0 pt-[80px] bottom-0 overflow-y-scroll left-0 block h-screen ;
 }
 
@@ -81,3 +84,6 @@
   border-radius: 10px;
 }
 
+.iconProj svg{
+  @apply inline mr-3 w-8 h-8;
+}

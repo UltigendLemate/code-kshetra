@@ -8,6 +8,14 @@ import FeaturesCard from "~/components/FeeaturesCard";
 import Navbar from "~/components/Navbar";
 import Footer from "~/components/Footer";
 import Waiting from "~/components/Waiting";
+import {
+  BadgeDollarSign,
+  Figma,
+  GanttChartSquare,
+  Laptop,
+  Settings,
+  User,
+} from "lucide-react";
 
 export default function HomePage() {
   return (
@@ -26,7 +34,7 @@ export default function HomePage() {
           </div>
           <div className=" pt-4">
             <h6 className=" text-xl text-muted-foreground">
-              ProjectPlannerAI is a platform that suggests marketing strategies,
+              QuikPlanr is a platform that suggests marketing strategies,
             </h6>
             <h6 className=" text-xl text-muted-foreground">
               design elements and product features for your idea in minutes.
@@ -41,8 +49,8 @@ export default function HomePage() {
 
         {/* video div starts  */}
         <div className="mx-auto my-20 h-[90vh] max-w-screen-xl rounded-3xl border-[12px] border-border">
-          <video width="100%" height="100%" controls>
-            <source src="/video.mp4" type="video/mp4" />
+          <video width="100%" height="100%" src="/video.mp4">
+            {/* <source src="/video.mp4" type="video/mp4" /> */}
           </video>
         </div>
 
@@ -53,23 +61,23 @@ export default function HomePage() {
           <div className="grid grid-cols-6 gap-10 pt-10">
             <div className="col-span-2">
               <FeaturesCard
-                image="/ex-01.webp"
-                title="Recipe App"
-                desc=" Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea quasi delectus placeat aut obcaecati similique?"
+                icon={<GanttChartSquare />}
+                title="Overview"
+                desc="Provides a general summary and insight into the project."
               />
             </div>
             <div className="col-span-2">
               <FeaturesCard
-                image="/ex-01.webp"
-                title="Recipe App"
-                desc=" Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea quasi delectus placeat aut obcaecati similique?"
+                icon={<BadgeDollarSign />}
+                title="Marketing"
+                desc="Focuses on marketing-related aspects such as product names, icons, assets, and competitive analysis."
               />
             </div>
             <div className="col-span-2">
               <FeaturesCard
-                image="/ex-01.webp"
-                title="Recipe App"
-                desc=" Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea quasi delectus placeat aut obcaecati similique?"
+                icon={<Figma />}
+                title="Design"
+                desc="Covers design elements including color palette, designs, and suggested typography."
               />
             </div>
           </div>
@@ -77,16 +85,16 @@ export default function HomePage() {
             <div className="col-span-1"></div>
             <div className="col-span-2">
               <FeaturesCard
-                image="/ex-01.webp"
-                title="Recipe App"
-                desc=" Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea quasi delectus placeat aut obcaecati similique?"
+                icon={<Settings />}
+                title="Functionality"
+                desc="Addresses functional aspects like required features, additional features, and information architecture."
               />
             </div>
             <div className="col-span-2">
               <FeaturesCard
-                image="/ex-01.webp"
-                title="Recipe App"
-                desc=" Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea quasi delectus placeat aut obcaecati similique?"
+                icon={<Laptop />}
+                title="Technology"
+                desc="Encompasses technological considerations, specifically database models."
               />
             </div>
             <div className="col-span-1"></div>
@@ -97,26 +105,29 @@ export default function HomePage() {
         <div className=" bg-blue-100 py-16 ">
           <div className="mx-auto max-w-screen-xl">
             <SmallHeading text="Examples" />
-            <LargeHeading text="Built with ProjectPlannerAI" />
+            <LargeHeading text="Built with QuickPlanr" />
             <div className="grid gap-10 pt-10 md:grid-cols-3">
               <ProjectsCard
                 image="/ex-01.webp"
-                title="Recipe App"
+                title="Yummly"
                 date="5 Feb 2024"
-                desc="An app to organise recipees"
+                desc="An app to organise recipes"
+                id="f2b53ae4-31e2-471a-ba57-3a0daf2fda6f"
               />
 
               <ProjectsCard
-                image="/ex-01.webp"
-                title="Recipe App"
+                image="/rentcam.png"
+                title="LensRentals"
                 date="5 Feb 2024"
-                desc="An app to organise recipees"
+                desc="a website to rent media equipment"
+                id="42e31960-de8b-4a6b-a129-0271168be9ba"
               />
               <ProjectsCard
-                image="/ex-01.webp"
-                title="Recipe App"
+                image="/cloudkitchen.png"
+                title="AsapEats"
+                id="340b1583-612d-4e7e-88af-023b703d5af8"
                 date="5 Feb 2024"
-                desc="An app to organise recipees"
+                desc="fast food business on cloud kitchen model"
               />
             </div>
           </div>
