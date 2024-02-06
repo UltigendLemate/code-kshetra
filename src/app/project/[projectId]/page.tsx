@@ -22,6 +22,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "~/components/ui/tooltip"
 
 export default function ProjectPage({ params }: { params: { projectId: string } }) {
     const [proj, setProj] = useState<Project>()
@@ -597,12 +603,23 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
                     })
                   : proj.big_brands.map((aud, index) => {
                       return (
-                        <div
+                        <TooltipProvider key={aud}>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                          <div
                           key={index}
                           className="text-md rounded-md bg-blue-100 p-3 capitalize"
                         >
                           {aud}
                         </div>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>{aud} serves {proj.overview}.
+                            Their growth looks strong in India, cause of the fact that {proj?.industry_trends.india}
+                            </p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                       );
                     })}
               </div>
