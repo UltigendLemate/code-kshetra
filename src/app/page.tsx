@@ -40,7 +40,11 @@ export default function HomePage() {
         </div>
 
         {/* video div starts  */}
-        <div className="mx-auto my-20 h-[90vh] max-w-screen-xl rounded-3xl border-[12px] border-border"></div>
+        <div className="mx-auto my-20 h-[90vh] max-w-screen-xl rounded-3xl border-[12px] border-border">
+          <video width="100%" height="100%" controls>
+            <source src="/video.mp4" type="video/mp4" />
+          </video>
+        </div>
 
         {/* features section */}
         <div className="mx-auto max-w-screen-xl pb-20 pt-10">
