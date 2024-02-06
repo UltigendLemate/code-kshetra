@@ -7,8 +7,16 @@ import ProjectsCard from "~/components/ProjectsCard";
 import FeaturesCard from "~/components/FeeaturesCard";
 import Navbar from "~/components/Navbar";
 import Footer from "~/components/Footer";
-import Waiting from "~/components/Waiting";
-import { BadgeDollarSign, Figma, GanttChartSquare, Laptop, Settings, User } from "lucide-react";
+import Video from "~/components/Video";
+import {
+  BadgeDollarSign,
+  Figma,
+  GanttChartSquare,
+  Laptop,
+  Settings,
+  User,
+} from "lucide-react";
+import { useEffect, useRef } from "react";
 
 export default function HomePage() {
   return (
@@ -41,7 +49,9 @@ export default function HomePage() {
         </div>
 
         {/* video div starts  */}
-        <div className="mx-auto my-20 h-[90vh] max-w-screen-xl rounded-3xl border-[12px] border-border"></div>
+        <div className="mx-auto my-16 flex min-h-[90vh] max-w-screen-xl rounded-3xl border-[12px] border-border ">
+          <Video />
+        </div>
 
         {/* features section */}
         <div className="mx-auto max-w-screen-xl pb-20 pt-10">
@@ -50,21 +60,21 @@ export default function HomePage() {
           <div className="grid grid-cols-6 gap-10 pt-10">
             <div className="col-span-2">
               <FeaturesCard
-                icon = {<GanttChartSquare />}
+                icon={<GanttChartSquare />}
                 title="Overview"
                 desc="Provides a general summary and insight into the project."
               />
             </div>
             <div className="col-span-2">
               <FeaturesCard
-                icon = {<BadgeDollarSign />}
+                icon={<BadgeDollarSign />}
                 title="Marketing"
                 desc="Focuses on marketing-related aspects such as product names, icons, assets, and competitive analysis."
               />
             </div>
             <div className="col-span-2">
               <FeaturesCard
-                icon = {<Figma />}
+                icon={<Figma />}
                 title="Design"
                 desc="Covers design elements including color palette, designs, and suggested typography."
               />
@@ -74,14 +84,14 @@ export default function HomePage() {
             <div className="col-span-1"></div>
             <div className="col-span-2">
               <FeaturesCard
-                icon = {<Settings />}
+                icon={<Settings />}
                 title="Functionality"
                 desc="Addresses functional aspects like required features, additional features, and information architecture."
               />
             </div>
             <div className="col-span-2">
               <FeaturesCard
-                icon = {<Laptop />}
+                icon={<Laptop />}
                 title="Technology"
                 desc="Encompasses technological considerations, specifically database models."
               />
@@ -101,7 +111,7 @@ export default function HomePage() {
                 title="Yummly"
                 date="5 Feb 2024"
                 desc="An app to organise recipes"
-                id = "f2b53ae4-31e2-471a-ba57-3a0daf2fda6f"
+                id="f2b53ae4-31e2-471a-ba57-3a0daf2fda6f"
               />
 
               <ProjectsCard
