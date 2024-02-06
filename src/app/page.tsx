@@ -7,7 +7,7 @@ import ProjectsCard from "~/components/ProjectsCard";
 import FeaturesCard from "~/components/FeeaturesCard";
 import Navbar from "~/components/Navbar";
 import Footer from "~/components/Footer";
-import Waiting from "~/components/Waiting";
+import Video from "~/components/Video";
 import {
   BadgeDollarSign,
   Figma,
@@ -16,6 +16,7 @@ import {
   Settings,
   User,
 } from "lucide-react";
+import { useEffect, useRef } from "react";
 
 export default function HomePage() {
   return (
@@ -48,11 +49,7 @@ export default function HomePage() {
         </div>
 
         {/* video div starts  */}
-        <div className="mx-auto my-20 h-[90vh] max-w-screen-xl rounded-3xl border-[12px] border-border">
-          <video width="100%" height="100%" src="/video.mp4">
-            {/* <source src="/video.mp4" type="video/mp4" /> */}
-          </video>
-        </div>
+        <Video />
 
         {/* features section */}
         <div className="mx-auto max-w-screen-xl pb-20 pt-10">
