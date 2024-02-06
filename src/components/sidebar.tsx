@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { cn } from '~/lib/utils'
 import SidebarHeading from './SidebarHeading';
-import { Store, Target, LayoutPanelLeft, Database, CaseLower, Paintbrush, User, SlidersHorizontal, Building, Factory} from 'lucide-react'
+import { Store, Target, LayoutPanelLeft, Database, CaseLower, Paintbrush, User, SlidersHorizontal, Building, Factory, CaseSensitive} from 'lucide-react'
 
 const Sidebar = ({classNames, active} : {classNames? : string, active: string}) => {
   
@@ -17,6 +17,9 @@ const Sidebar = ({classNames, active} : {classNames? : string, active: string}) 
             <h1 className={`text-md px-[0.7rem] py-[0.4rem] flex ${active==="Overview" ? 'text-blue-500' : null}`}>
             <Store className="p-[0.2rem]" /> Overview
             </h1>
+            <h1 className={`text-md px-[0.7rem] py-[0.4rem] flex ${active==="Suggested Names" ? 'text-blue-500' : null}`}>
+            <CaseSensitive className="p-[0.2rem]" /> Name Suggestions
+            </h1>
           </div>
           <SidebarHeading text="Target Audience" />
           <div className="flex flex-col">
@@ -26,7 +29,7 @@ const Sidebar = ({classNames, active} : {classNames? : string, active: string}) 
           </div>
           <SidebarHeading text="Website" />
           <div className="flex flex-col">
-          <h1 className={`text-md px-[0.7rem] py-[0.4rem] flex ${active==="Database Schema Suggestions" ? 'text-blue-500' : null}`}>
+          <h1 className={`text-md px-[0.7rem] py-[0.4rem] flex ${active==="Suggested UI Designs" ? 'text-blue-500' : null}`}>
               <LayoutPanelLeft className="p-[0.2rem]"/> UI Design
             </h1>
             <h1 className={`text-md px-[0.7rem] py-[0.4rem] flex ${active==="Database Schema Suggestions" ? 'text-blue-500' : null}`}>
@@ -51,7 +54,7 @@ const Sidebar = ({classNames, active} : {classNames? : string, active: string}) 
           <SidebarHeading text="Competitive Landscape" />
           <div className="flex flex-col">
             <h1 className={`text-md px-[0.7rem] py-[0.4rem] flex ${active==="Big Brands" ? 'text-blue-500' : null}`}>
-            < Building className="p-[0.2rem]" /> Brands
+            < Building className="p-[0.2rem]" /> Competitors
             </h1>
           </div>
           <SidebarHeading text="Industry Insights" />

@@ -90,6 +90,7 @@ async function run(idea: string) {
     // object array with different color codes as strings, 
     ],
     ], 
+    suggested_names : array of strings
     
     required_features : [
      " ", 
@@ -124,7 +125,7 @@ async function run(idea: string) {
             color_pallete : string[][],
             typography : string[]
         }
-        suggestes_names : string[],
+        suggested_names : string[],
     }
     the json should not contain any non json parsable character.  it should strictly follow the given type Project. name the properties exactly the same. no spelling mistake should be there. check 2 times`,
     },

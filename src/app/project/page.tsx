@@ -8,6 +8,26 @@ import { Button } from "~/components/ui/button"
 import { type Project } from "~/types/project"
 import Waiting from "~/components/Waiting";
 import { useRouter } from "next/navigation";
+async function callApiWithRetry(values : string, options = {}) {
+  const maxRetries = 3;
+  let retryCount = 0;
+
+  while (retryCount < maxRetries) {
+    try {
+      const response = await axios.post('/api/getData', { idea: values });
+
+      return response;
+    } catch (error) {
+      retryCount++;
+      const delay = Math.pow(2, retryCount) * 1000; // Exponential backoff
+      console.error(`API call failed, retrying in ${delay}ms...`);
+      await new Promise(resolve => setTimeout(resolve, delay));
+    }
+  }
+
+  throw new Error(`API call failed after ${maxRetries} attempts`);
+}
+
 
 
 export default function Project() {
@@ -21,7 +41,7 @@ export default function Project() {
   const givePrompt = async (values: string) => {
     console.log(values)
     setIsLoading(true)
-    const respone = await axios.post('/api/getData', { idea: values });
+    const respone = await callApiWithRetry(values);
     console.log(respone)
     const data = respone.data as { res: Project, id: string };
     const res = data.res;

@@ -12,7 +12,7 @@ import { Button } from "~/components/ui/button";
 import { getProject } from "~/lib/queries";
 import { cn } from "~/lib/utils";
 import { type Project } from "~/types/project";
-import {ArrowBigUpDash, BookCheck, Bug, CaseSensitive, DatabaseZap, Palette, Wand2, Users} from 'lucide-react'
+import {ArrowBigUpDash, BookCheck, Bug, CaseSensitive, DatabaseZap, Palette, Wand2, Users, Figma, BookType} from 'lucide-react'
 import {
   Dialog,
   DialogContent,
@@ -66,11 +66,11 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
         <Sidebar active={active} />
         <div className="flex w-4/5 flex-col gap-5 bg-muted p-6 shadow-lg shadow-black absolute right-0">
           <h2 className="px-5  text-2xl font-semibold capitalize ">{idea}</h2>
-          <div className="rounded-md bg-gray-50 p-6 shadow-xl relative">
+          <div className="rounded-md bg-gray-50 p-6 group shadow-xl relative">
           <Dialog >
       <DialogTrigger asChild>
         {proj?.overview ? (<Button 
-        className="absolute right-5 top-5"
+        className="absolute right-5 top-5 hidden group-hover:flex"
         variant="outline"><Wand2/> <p className="p-[0.3rem]">Edit with AI</p></Button>) : null}
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
@@ -84,21 +84,21 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
           <div className="grid grid-cols-1 items-center gap-4">
           <Button 
           onClick={() => {
-            refractor(idea, "Extrapolate this data with latest research till 2023", proj.overview).then(
+            refractor( "Extrapolate this data with latest research till 2023", proj?.overview ?? "").then(
               (res) => setRefractoredAnsOverview(res.data as string)
             ).catch((err) => alert(err))
           }}
           type="submit">Extrapolate this data with latest research till 2023</Button>
           <Button 
           onClick={() => {
-            refractor(idea, "Expand the answer to understand with ease", proj.overview).then(
+            refractor("Expand the answer to understand with ease", proj?.overview ?? "").then(
               (res) => setRefractoredAnsOverview(res.data as string)
             ).catch((err) => alert(err))
           }}
           type="submit">Expand the answer to understand with ease</Button>
           <Button 
           onClick={() => {
-            refractor(idea, "Explain this data in less words", proj.overview).then(
+            refractor( "Explain this data in less words", proj?.overview ?? "").then(
               (res) => setRefractoredAnsOverview(res.data as string)
             ).catch((err) => alert(err))
           }}
@@ -112,9 +112,8 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
         </div>
       </DialogContent>
     </Dialog>
-            {/* <button >
-              
-            </button> */}
+        
+
             <Heading setActive={setActive} text="Overview" />
             {isLoading || !proj ? (
               <div className="space-y-2">
@@ -127,20 +126,85 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
               <Description text={proj?.overview}/>
               {
                 refractoredAnsOverview ? (
-                  <p className="text-black text-center text-xs my-[0.2rem]">
-                    {refractoredAnsOverview}
-                  </p>
+              <Description text={refractoredAnsOverview}/>
+                  
                 ) : null
               }
               </>
             )}
           </div>
 
-          <div className="rounded-md bg-gray-50 p-6 shadow-xl relative">
+          {/* Name Suggestions  */}
+          <div className="rounded-md bg-gray-50 p-6 shadow-xl relative group">
           <Dialog >
       <DialogTrigger asChild>
         {proj?.overview ? (<Button 
-        className="absolute right-5 top-5"
+        className="absolute right-5 top-5 hidden group-hover:flex"
+        variant="outline"><Wand2/> <p className="p-[0.3rem]">Edit with AI</p></Button>) : null}
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Edit with AI</DialogTitle>
+          <DialogDescription>
+            Select the option you want and let the AI give you tailored answers
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-1 items-center gap-4">
+          <Button 
+          // onClick={() => {
+
+          // }}
+          type="submit">Extrapolate this data with latest research till 2023</Button>
+          <Button type="submit">Expand the answer to understand with ease</Button>
+          <Button type="submit">Explain this data in less words</Button>
+            {/* <Label htmlFor="name" className="text-right">
+              Name
+            </Label>
+            <Input id="name" value="Pedro Duarte" className="col-span-3" /> */}
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+            <Heading icon={<BookType />} setActive={setActive} text="Suggested Names" />
+            {/* <Description text={` ${proj?.target_audience}`} /> */}
+            <div>
+              <div className="mt-3 grid  grid-cols-3 gap-4">
+                {isLoading || !proj?.suggested_names
+                  ? [...Array(6)].map((index) => {
+                      return (
+                        <div
+                          key={index}
+                          className="flex animate-pulse flex-col gap-1 rounded-md bg-blue-200 p-3 text-left duration-1000"
+                        >
+                          <div className="h-5 w-full " />
+                        </div>
+                      );
+                    })
+                  : proj.suggested_names.map((aud, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className="flex flex-col gap-1 rounded-md bg-blue-100 p-3 text-left"
+                        >
+                          <h4
+                            className="text-xl font-medium capitalize"
+                            
+                          >
+                            {aud}
+                          </h4>
+                        </div>
+                      );
+                    })}
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-md bg-gray-50 p-6 group shadow-xl relative">
+          <Dialog >
+      <DialogTrigger asChild>
+        {proj?.overview ? (<Button 
+        className="absolute right-5 top-5 hidden group-hover:flex"
         variant="outline"><Wand2/> <p className="p-[0.3rem]">Edit with AI</p></Button>) : null}
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
@@ -219,12 +283,70 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
             </div>
           </div>
 
-          {/* DB Schema  */}
-          <div className="rounded-md bg-gray-50 p-6 shadow-xl relative">
+          {/* Ui Designs */}
+          <div className="rounded-md bg-gray-50 p-6 shadow-xl relative group">
           <Dialog >
       <DialogTrigger asChild>
         {proj?.overview ? (<Button 
-        className="absolute right-5 top-5"
+        className="absolute right-5 top-5 hidden group-hover:flex"
+        variant="outline"><Wand2/> <p className="p-[0.3rem]">Edit with AI</p></Button>) : null}
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Edit with AI</DialogTitle>
+          <DialogDescription>
+            Select the option you want and let the AI give you tailored answers
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-1 items-center gap-4">
+          <Button 
+          // onClick={() => {
+
+          // }}
+          type="submit">Extrapolate this data with latest research till 2023</Button>
+          <Button type="submit">Expand the answer to understand with ease</Button>
+          <Button type="submit">Explain this data in less words</Button>
+            {/* <Label htmlFor="name" className="text-right">
+              Name
+            </Label>
+            <Input id="name" value="Pedro Duarte" className="col-span-3" /> */}
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+            <Heading icon={<Figma />} setActive={setActive} text="Suggested UI Designs" />
+            {/* <Description text={` ${proj?.target_audience}`} /> */}
+            <div>
+              <div className="mt-3 grid grid-cols-4 gap-4">
+                {isLoading || !proj
+                  ? [...Array(4)].map((aud, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className="h-10 w-full animate-pulse rounded-md bg-violet-100 duration-1000"
+                        >
+                          <h4 className="mb-2 text-lg font-bold capitalize underline underline-offset-2"></h4>
+                          {[...Array(5)].map((prop, index) => {
+                            return <p key={index}>{prop}</p>;
+                          })}
+                        </div>
+                      );
+                    })
+                  : ["08","07","06","05"].map((aud, index) => {
+                        return <img key={index} src={`/${aud}.png`} className="w-full h-full object-cover"/>
+                    }
+                    )}
+              </div>
+            </div>
+          </div>
+
+          {/* DB Schema  */}
+          <div className="rounded-md bg-gray-50 p-6 shadow-xl relative group">
+          <Dialog >
+      <DialogTrigger asChild>
+        {proj?.overview ? (<Button 
+        className="absolute right-5 top-5 hidden group-hover:flex"
         variant="outline"><Wand2/> <p className="p-[0.3rem]">Edit with AI</p></Button>) : null}
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
@@ -289,11 +411,11 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
           </div>
 
           {/* Typography Suggestions  */}
-          <div className="rounded-md bg-gray-50 p-6 shadow-xl relative">
+          <div className="rounded-md bg-gray-50 p-6 shadow-xl relative group">
           <Dialog >
       <DialogTrigger asChild>
         {proj?.overview ? (<Button 
-        className="absolute right-5 top-5"
+        className="absolute right-5 top-5 hidden group-hover:flex"
         variant="outline"><Wand2/> <p className="p-[0.3rem]">Edit with AI</p></Button>) : null}
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
@@ -355,11 +477,11 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
           </div>
 
           {/* Color Palette Suggestions  */}
-          <div className="rounded-md bg-gray-50 p-6 shadow-xl relative">
+          <div className="rounded-md bg-gray-50 p-6 shadow-xl relative group">
           <Dialog >
       <DialogTrigger asChild>
         {proj?.overview ? (<Button 
-        className="absolute right-5 top-5"
+        className="absolute right-5 top-5 hidden group-hover:flex"
         variant="outline"><Wand2/> <p className="p-[0.3rem]">Edit with AI</p></Button>) : null}
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
@@ -431,11 +553,11 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
           </div>
 
           {/* Pain points of users  */}
-          <div className="rounded-md bg-gray-50 p-6 shadow-xl relative">
+          <div className="rounded-md bg-gray-50 p-6 shadow-xl relative group">
           <Dialog >
       <DialogTrigger asChild>
         {proj?.overview ? (<Button 
-        className="absolute right-5 top-5"
+        className="absolute right-5 top-5 hidden group-hover:flex"
         variant="outline"><Wand2/> <p className="p-[0.3rem]">Edit with AI</p></Button>) : null}
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
@@ -492,11 +614,11 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
           </div>
 
           {/* Required Features  */}
-          <div className="rounded-md bg-gray-50 p-6 shadow-xl relative">
+          <div className="rounded-md bg-gray-50 p-6 shadow-xl relative group">
           <Dialog >
       <DialogTrigger asChild>
         {proj?.overview ? (<Button 
-        className="absolute right-5 top-5"
+        className="absolute right-5 top-5 hidden group-hover:flex"
         variant="outline"><Wand2/> <p className="p-[0.3rem]">Edit with AI</p></Button>) : null}
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
@@ -552,11 +674,11 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
           </div>
 
           {/* Big Brands  */}
-          <div className="rounded-md bg-gray-50 p-6 shadow-xl relative">
+          <div className="rounded-md bg-gray-50 p-6 shadow-xl relative group">
           <Dialog >
       <DialogTrigger asChild>
         {proj?.overview ? (<Button 
-        className="absolute right-5 top-5"
+        className="absolute right-5 top-5 hidden group-hover:flex"
         variant="outline"><Wand2/> <p className="p-[0.3rem]">Edit with AI</p></Button>) : null}
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
@@ -608,12 +730,12 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
                           <TooltipTrigger asChild>
                           <div
                           key={index}
-                          className="text-md rounded-md bg-blue-100 p-3 capitalize"
+                          className="text-md rounded-md cursor-pointer bg-blue-100 p-3 capitalize"
                         >
                           {aud}
                         </div>
                           </TooltipTrigger>
-                          <TooltipContent>
+                          <TooltipContent className=" w-96">
                             <p>{aud} serves {proj.overview}.
                             Their growth looks strong in India, cause of the fact that {proj?.industry_trends.india}
                             </p>
@@ -627,11 +749,11 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
           </div>
 
           {/* Industry Trends  */}
-          <div className="rounded-md bg-gray-50 p-6 shadow-xl relative">
+          <div className="rounded-md bg-gray-50 p-6 shadow-xl relative group">
           <Dialog >
       <DialogTrigger asChild>
         {proj?.overview ? (<Button 
-        className="absolute right-5 top-5"
+        className="absolute right-5 top-5 hidden group-hover:flex"
         variant="outline"><Wand2/> <p className="p-[0.3rem]">Edit with AI</p></Button>) : null}
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
@@ -644,9 +766,6 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-1 items-center gap-4">
           <Button 
-          // onClick={() => {
-
-          // }}
           type="submit">Extrapolate this data with latest research till 2023</Button>
           <Button type="submit">Expand the answer to understand with ease</Button>
           <Button type="submit">Explain this data in less words</Button>

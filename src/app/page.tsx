@@ -100,8 +100,8 @@ export default function HomePage() {
                 image="/ex-01.webp"
                 title="Yummly"
                 date="5 Feb 2024"
-                desc="An app to organise recipees"
-                id = "912cfd4f-f3a6-4111-868e-e771ff0cfb14"
+                desc="An app to organise recipes"
+                id = "f2b53ae4-31e2-471a-ba57-3a0daf2fda6f"
               />
 
               <ProjectsCard
@@ -109,12 +109,12 @@ export default function HomePage() {
                 title="LensRentals"
                 date="5 Feb 2024"
                 desc="a website to rent media equipment"
-                id="fd000f9c-97f3-4fda-aee0-851a53af3136"
+                id="42e31960-de8b-4a6b-a129-0271168be9ba"
               />
               <ProjectsCard
                 image="/cloudkitchen.png"
                 title="AsapEats"
-                id="c8dfa1ee-06fa-443b-841f-51383641a6b9"
+                id="340b1583-612d-4e7e-88af-023b703d5af8"
                 date="5 Feb 2024"
                 desc="fast food business on cloud kitchen model"
               />
