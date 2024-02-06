@@ -49,7 +49,9 @@ export default function HomePage() {
         </div>
 
         {/* video div starts  */}
-        <Video />
+        <div className="mx-auto my-16 flex min-h-[90vh] max-w-screen-xl rounded-3xl border-[12px] border-border ">
+          <Video />
+        </div>
 
         {/* features section */}
         <div className="mx-auto max-w-screen-xl pb-20 pt-10">
