@@ -3,7 +3,7 @@
 import { signIn, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { set } from "zod";
-import axios from 'axios'
+import axios from "axios";
 import Sidebar from "~/components/sidebar";
 import Description from "~/components/project/Description";
 import Heading from "~/components/project/Heading";
@@ -12,7 +12,32 @@ import { Button } from "~/components/ui/button";
 import { getProject } from "~/lib/queries";
 import { cn } from "~/lib/utils";
 import { type Project } from "~/types/project";
-import { ArrowBigUpDash, BookCheck, Bug, CaseSensitive, DatabaseZap, Palette, Wand2, Users, Figma, BookType } from 'lucide-react'
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "~/components/ui/table"
+import {
+  ArrowBigUpDash,
+  BookCheck,
+  Footprints,
+  Bug,
+  CaseSensitive,
+  DatabaseZap,
+  Palette,
+  Wand2,
+  Users,
+  Figma,
+  BookType,
+  Recycle,
+  SmilePlus,
+  Calculator,
+} from "lucide-react";
 import {
   Dialog,
   DialogClose,
@@ -22,103 +47,138 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "~/components/ui/dialog"
+} from "~/components/ui/dialog";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "~/components/ui/tooltip"
+} from "~/components/ui/tooltip";
+import DialogEdit from "~/components/DialogEdit";
 
-export default function ProjectPage({ params }: { params: { projectId: string } }) {
-  const [proj, setProj] = useState<Project>()
-  const [refractoredAnsOverview, setRefractoredAnsOverview] = useState<string>("")
-  const [refractoredAnsTA, setRefractoredAnsTA] = useState<string>("")
-  const [active, setActive] = useState<string>('overview')
-  console.log(proj)
-  const [idea, setIdea] = useState<string>("")
-  const [isLoading, setIsLoading] = useState(true)
+export default function ProjectPage({
+  params,
+}: {
+  params: { projectId: string };
+}) {
+  const [proj, setProj] = useState<Project>();
+  const [refractoredAnsOverview, setRefractoredAnsOverview] =
+    useState<string>("");
+  const [refractoredAnsTA, setRefractoredAnsTA] = useState<string>("");
+  const [active, setActive] = useState<string>("overview");
+  console.log(proj);
+  const [idea, setIdea] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const fetchProject = async () => {
-      setIsLoading(true)
+      setIsLoading(true);
       const res = await getProject(params.projectId);
-      const jsonProj = JSON.parse(res?.data ?? "") as Project
-      console.log("fetchproj", jsonProj)
-      setProj(jsonProj)
-      setIdea(res?.idea ?? "")
-      setIsLoading(false)
-    }
+      const jsonProj = JSON.parse(res?.data ?? "") as Project;
+      console.log("fetchproj", jsonProj);
+      setProj(jsonProj);
+      setIdea(res?.idea ?? "");
+      setIsLoading(false);
+    };
     void fetchProject();
-  }, [])
-
+  }, []);
 
   const refractor = async (query: string, value: string) => {
-    setIsLoading(true)
-    const res = await axios.post('/api/refractor', { idea: idea, query: query, value: value });
-    setIsLoading(false)
+    setIsLoading(true);
+    const res = await axios.post("/api/refractor", {
+      idea: idea,
+      query: query,
+      value: value,
+    });
+    setIsLoading(false);
     return res;
-  }
+  };
   // console.log(JSON.stringify(refractoredAns.data, null, 2) + "  refracter")
-  console.log("proj printing", proj)
+  console.log("proj printing", proj);
 
   return (
     <>
-      <div className="flex h-full w-full bg-blue-200 relative">
+      <div className="relative flex h-full w-full bg-blue-200">
         <Sidebar active={active} />
-        <div className="flex w-4/5 flex-col gap-5 bg-muted p-6 shadow-lg shadow-black absolute right-0">
+        <div className="absolute right-0 flex w-4/5 flex-col gap-5 bg-muted p-6 shadow-lg shadow-black">
           <h2 className="px-5  text-2xl font-semibold capitalize ">{idea}</h2>
-          <div className="rounded-md bg-gray-50 p-6 group shadow-xl relative">
-            <Dialog >
+          <div className="group relative rounded-md bg-gray-50 p-6 shadow-xl">
+            <Dialog>
               <DialogTrigger asChild>
-                {proj?.overview ? (<Button
-                  className="absolute right-5 top-5 hidden group-hover:flex"
-                  variant="outline"><Wand2 /> <p className="p-[0.3rem]">Edit with AI</p></Button>) : null}
+                {proj?.overview ? (
+                  <Button
+                    className="absolute right-5 top-5 hidden group-hover:flex"
+                    variant="outline"
+                  >
+                    <Wand2 /> <p className="p-[0.3rem]">Edit with AI</p>
+                  </Button>
+                ) : null}
               </DialogTrigger>
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
                   <DialogTitle>Edit with AI</DialogTitle>
                   <DialogDescription>
-                    Select the option you want and let the AI give you tailored answers
+                    Select the option you want and let the AI give you tailored
+                    answers
                   </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
                   <div className="grid grid-cols-1 items-center gap-4">
                     <DialogClose asChild>
-
-
                       <Button
                         onClick={() => {
-                          refractor("Extrapolate this data with latest research till 2023", proj?.overview ?? "").then(
-                            (res) => setRefractoredAnsOverview(res.data as string)
-                          ).catch((err) => alert(err))
+                          refractor(
+                            "Extrapolate this data with latest research till 2023",
+                            proj?.overview ?? "",
+                          )
+                            .then((res) =>
+                              setRefractoredAnsOverview(res.data as string),
+                            )
+                            .catch((err) => alert(err));
                         }}
-                        type="submit">Extrapolate this data with latest research till 2023</Button>
+                        type="submit"
+                      >
+                        Extrapolate this data with latest research till 2023
+                      </Button>
                     </DialogClose>
                     <DialogClose asChild>
-                    <Button
-                      onClick={() => {
-                        refractor("Expand the answer to understand with ease", proj?.overview ?? "").then(
-                          (res) => setRefractoredAnsOverview(res.data as string)
-                        ).catch((err) => alert(err))
-                      }}
-                      type="submit">Expand the answer to understand with ease</Button>
-                      </DialogClose>
+                      <Button
+                        onClick={() => {
+                          refractor(
+                            "Expand the answer to understand with ease",
+                            proj?.overview ?? "",
+                          )
+                            .then((res) =>
+                              setRefractoredAnsOverview(res.data as string),
+                            )
+                            .catch((err) => alert(err));
+                        }}
+                        type="submit"
+                      >
+                        Expand the answer to understand with ease
+                      </Button>
+                    </DialogClose>
 
-                      <DialogClose asChild>
-                    <Button
-                      onClick={() => {
-                        refractor("Explain this data in less words", proj?.overview ?? "").then(
-                          (res) => setRefractoredAnsOverview(res.data as string)
-                        ).catch((err) => alert(err))
-                      }}
-                      type="submit">Explain this data in less words</Button>
-                      </DialogClose>
-
+                    <DialogClose asChild>
+                      <Button
+                        onClick={() => {
+                          refractor(
+                            "Explain this data in less words",
+                            proj?.overview ?? "",
+                          )
+                            .then((res) =>
+                              setRefractoredAnsOverview(res.data as string),
+                            )
+                            .catch((err) => alert(err));
+                        }}
+                        type="submit"
+                      >
+                        Explain this data in less words
+                      </Button>
+                    </DialogClose>
                   </div>
                 </div>
               </DialogContent>
             </Dialog>
-
 
             <Heading setActive={setActive} text="Overview" />
             {isLoading || !proj ? (
@@ -130,130 +190,59 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
             ) : (
               <>
                 <Description text={proj?.overview} />
-                {
-                  refractoredAnsOverview ? (
-                    <Description text={refractoredAnsOverview} />
-
-                  ) : null
-                }
+                {refractoredAnsOverview ? (
+                  <Description text={refractoredAnsOverview} />
+                ) : null}
               </>
             )}
           </div>
 
           {/* Name Suggestions  */}
-          <div className="rounded-md bg-gray-50 p-6 shadow-xl relative group">
-            <Dialog >
-              <DialogTrigger asChild>
-                {proj?.overview ? (<Button
-                  className="absolute right-5 top-5 hidden group-hover:flex"
-                  variant="outline"><Wand2 /> <p className="p-[0.3rem]">Edit with AI</p></Button>) : null}
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader>
-                  <DialogTitle>Edit with AI</DialogTitle>
-                  <DialogDescription>
-                    Select the option you want and let the AI give you tailored answers
-                  </DialogDescription>
-                </DialogHeader>
-                <div className="grid gap-4 py-4">
-                  <div className="grid grid-cols-1 items-center gap-4">
-                    <Button
-                      // onClick={() => {
+          <div className="group relative rounded-md bg-gray-50 p-6 shadow-xl">
+            <DialogEdit />
+            <Heading
+              icon={<BookType />}
+              setActive={setActive}
+              text="Suggested Names"
+            />
 
-                      // }}
-                      type="submit">Extrapolate this data with latest research till 2023</Button>
-                    <Button type="submit">Expand the answer to understand with ease</Button>
-                    <Button type="submit">Explain this data in less words</Button>
-                    {/* <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input id="name" value="Pedro Duarte" className="col-span-3" /> */}
-                  </div>
-                </div>
-              </DialogContent>
-            </Dialog>
-            <Heading icon={<BookType />} setActive={setActive} text="Suggested Names" />
-            {/* <Description text={` ${proj?.target_audience}`} /> */}
             <div>
               <div className="mt-3 grid  grid-cols-3 gap-4">
                 {isLoading || !proj?.suggested_names
                   ? [...Array(6)].map((index) => {
-                    return (
-                      <div
-                        key={index}
-                        className="flex animate-pulse flex-col gap-1 rounded-md bg-blue-200 p-3 text-left duration-1000"
-                      >
-                        <div className="h-5 w-full " />
-                      </div>
-                    );
-                  })
-                  : proj.suggested_names.map((aud, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className="flex flex-col gap-1 rounded-md bg-blue-100 p-3 text-left"
-                      >
-                        <h4
-                          className="text-xl font-medium capitalize"
-
+                      return (
+                        <div
+                          key={index}
+                          className="flex animate-pulse flex-col gap-1 rounded-md bg-blue-200 p-3 text-left duration-1000"
                         >
-                          {aud}
-                        </h4>
-                      </div>
-                    );
-                  })}
+                          <div className="h-5 w-full " />
+                        </div>
+                      );
+                    })
+                  : proj.suggested_names.map((aud, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className="flex flex-col gap-1 rounded-md bg-blue-100 p-3 text-left"
+                        >
+                          <h4 className="text-xl font-medium capitalize">
+                            {aud}
+                          </h4>
+                        </div>
+                      );
+                    })}
               </div>
             </div>
           </div>
 
-          <div className="rounded-md bg-gray-50 p-6 group shadow-xl relative">
-            <Dialog >
-              <DialogTrigger asChild>
-                {proj?.overview ? (<Button
-                  className="absolute right-5 top-5 hidden group-hover:flex"
-                  variant="outline"><Wand2 /> <p className="p-[0.3rem]">Edit with AI</p></Button>) : null}
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader>
-                  <DialogTitle>Edit with AI</DialogTitle>
-                  <DialogDescription>
-                    Select the option you want and let the AI give you tailored answers
-                  </DialogDescription>
-                </DialogHeader>
-                <div className="grid gap-4 py-4">
-                  <div className="grid grid-cols-1 items-center gap-4">
-                    <Button
-                      // onClick={() => {
-                      //   refractor(idea, "Extrapolate this data with latest research till 2023", proj.overview).then(
-                      //     (res) => setRefractoredAnsTA(res.data as string)
-                      //   ).catch((err) => alert(err))
-                      // }}
-                      type="submit">Extrapolate this data with latest research till 2023</Button>
-                    <Button
-                      // onClick={() => {
-                      //   refractor(idea, "Expand the answer to understand with ease", proj.overview).then(
-                      //     (res) => setRefractoredAnsTA(res.data as string)
-                      //   ).catch((err) => alert(err))
-                      // }}
-                      type="submit">Expand the answer to understand with ease</Button>
-                    <Button
-                      // onClick={() => {
-                      //   refractor(idea, "Explain this data in less words", proj.overview).then(
-                      //     (res) => setRefractoredAnsTA(res.data as string)
-                      //   ).catch((err) => alert(err))
-                      // }}
-                      type="submit">Explain this data in less words</Button>
-                    {/* <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input id="name" value="Pedro Duarte" className="col-span-3" /> */}
-                  </div>
-                </div>
-              </DialogContent>
-            </Dialog>
+          <div className="group relative rounded-md bg-gray-50 p-6 shadow-xl">
+            <DialogEdit />
 
-
-            <Heading icon={<Users />} setActive={setActive} text="Target Audience" />
+            <Heading
+              icon={<Users />}
+              setActive={setActive}
+              text="Target Audience"
+            />
             <div>
               {!isLoading && <p className="text-md ">Your key target audience includes :</p>}
               <div className="flex gap-4 flex-wrap">
@@ -264,7 +253,7 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
                     <h6 className="h-10 w-full animate-pulse rounded-md bg-gray-300 duration-1000"></h6>
                   </div>
                 ) : (
-                  proj.target_audience.split(",").map((aud, index) => {
+                  proj.target_audience.map((aud, index) => {
                     return (
                       <>
                         <p
@@ -273,14 +262,6 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
                         >
                           {aud}
                         </p>
-
-                        {/* {
-  refractoredAnsOverview ? (
-    <p className="text-black text-center text-xs my-[0.2rem]">
-      {refractoredAnsTA}
-    </p>
-  ) : null
-} */}
                       </>
                     );
                   })
@@ -290,18 +271,24 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
           </div>
 
           {/* Ui Designs */}
-          <div className="rounded-md bg-gray-50 p-6 shadow-xl relative group">
-            <Dialog >
+          <div className="group relative rounded-md bg-gray-50 p-6 shadow-xl">
+            <Dialog>
               <DialogTrigger asChild>
-                {proj?.overview ? (<Button
-                  className="absolute right-5 top-5 hidden group-hover:flex"
-                  variant="outline"><Wand2 /> <p className="p-[0.3rem]">Edit with AI</p></Button>) : null}
+                {proj?.overview ? (
+                  <Button
+                    className="absolute right-5 top-5 hidden group-hover:flex"
+                    variant="outline"
+                  >
+                    <Wand2 /> <p className="p-[0.3rem]">Edit with AI</p>
+                  </Button>
+                ) : null}
               </DialogTrigger>
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
                   <DialogTitle>Edit with AI</DialogTitle>
                   <DialogDescription>
-                    Select the option you want and let the AI give you tailored answers
+                    Select the option you want and let the AI give you tailored
+                    answers
                   </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
@@ -310,9 +297,16 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
                       // onClick={() => {
 
                       // }}
-                      type="submit">Extrapolate this data with latest research till 2023</Button>
-                    <Button type="submit">Expand the answer to understand with ease</Button>
-                    <Button type="submit">Explain this data in less words</Button>
+                      type="submit"
+                    >
+                      Extrapolate this data with latest research till 2023
+                    </Button>
+                    <Button type="submit">
+                      Expand the answer to understand with ease
+                    </Button>
+                    <Button type="submit">
+                      Explain this data in less words
+                    </Button>
                     {/* <Label htmlFor="name" className="text-right">
               Name
             </Label>
@@ -321,45 +315,60 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
                 </div>
               </DialogContent>
             </Dialog>
-            <Heading icon={<Figma />} setActive={setActive} text="Suggested UI Designs" />
+            <Heading
+              icon={<Figma />}
+              setActive={setActive}
+              text="Suggested UI Designs"
+            />
             {/* <Description text={` ${proj?.target_audience}`} /> */}
             <div>
               <div className="mt-3 grid grid-cols-4 gap-4">
                 {isLoading || !proj
                   ? [...Array(4)].map((aud, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className="h-10 w-full animate-pulse rounded-md bg-violet-100 duration-1000"
-                      >
-                        <h4 className="mb-2 text-lg font-bold capitalize underline underline-offset-2"></h4>
-                        {[...Array(5)].map((prop, index) => {
-                          return <p key={index}>{prop}</p>;
-                        })}
-                      </div>
-                    );
-                  })
+                      return (
+                        <div
+                          key={index}
+                          className="h-10 w-full animate-pulse rounded-md bg-violet-100 duration-1000"
+                        >
+                          <h4 className="mb-2 text-lg font-bold capitalize underline underline-offset-2"></h4>
+                          {[...Array(5)].map((prop, index) => {
+                            return <p key={index}>{prop}</p>;
+                          })}
+                        </div>
+                      );
+                    })
                   : ["08", "07", "06", "05"].map((aud, index) => {
-                    return <img key={index} src={`/${aud}.png`} className="w-full h-full object-cover" />
-                  }
-                  )}
+                      return (
+                        <img
+                          key={index}
+                          src={`/${aud}.png`}
+                          className="h-full w-full object-cover"
+                        />
+                      );
+                    })}
               </div>
             </div>
           </div>
 
           {/* DB Schema  */}
-          <div className="rounded-md bg-gray-50 p-6 shadow-xl relative group">
-            <Dialog >
+          <div className="group relative rounded-md bg-gray-50 p-6 shadow-xl">
+            <Dialog>
               <DialogTrigger asChild>
-                {proj?.overview ? (<Button
-                  className="absolute right-5 top-5 hidden group-hover:flex"
-                  variant="outline"><Wand2 /> <p className="p-[0.3rem]">Edit with AI</p></Button>) : null}
+                {proj?.overview ? (
+                  <Button
+                    className="absolute right-5 top-5 hidden group-hover:flex"
+                    variant="outline"
+                  >
+                    <Wand2 /> <p className="p-[0.3rem]">Edit with AI</p>
+                  </Button>
+                ) : null}
               </DialogTrigger>
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
                   <DialogTitle>Edit with AI</DialogTitle>
                   <DialogDescription>
-                    Select the option you want and let the AI give you tailored answers
+                    Select the option you want and let the AI give you tailored
+                    answers
                   </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
@@ -368,9 +377,16 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
                       // onClick={() => {
 
                       // }}
-                      type="submit">Extrapolate this data with latest research till 2023</Button>
-                    <Button type="submit">Expand the answer to understand with ease</Button>
-                    <Button type="submit">Explain this data in less words</Button>
+                      type="submit"
+                    >
+                      Extrapolate this data with latest research till 2023
+                    </Button>
+                    <Button type="submit">
+                      Expand the answer to understand with ease
+                    </Button>
+                    <Button type="submit">
+                      Explain this data in less words
+                    </Button>
                     {/* <Label htmlFor="name" className="text-right">
               Name
             </Label>
@@ -379,56 +395,66 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
                 </div>
               </DialogContent>
             </Dialog>
-            <Heading icon={<DatabaseZap />} setActive={setActive} text="Database Schema Suggestions" />
+            <Heading
+              icon={<DatabaseZap />}
+              setActive={setActive}
+              text="Database Schema Suggestions"
+            />
             {/* <Description text={` ${proj?.target_audience}`} /> */}
             <div>
               <div className="mt-3 grid grid-cols-4 gap-4">
                 {isLoading || !proj
                   ? [...Array(4)].map((aud, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className="h-10 w-full animate-pulse rounded-md bg-violet-100 duration-1000"
-                      >
-                        <h4 className="mb-2 text-lg font-bold capitalize underline underline-offset-2"></h4>
-                        {[...Array(5)].map((prop, index) => {
-                          return <p key={index}>{prop}</p>;
-                        })}
-                      </div>
-                    );
-                  })
+                      return (
+                        <div
+                          key={index}
+                          className="h-10 w-full animate-pulse rounded-md bg-violet-100 duration-1000"
+                        >
+                          <h4 className="mb-2 text-lg font-bold capitalize underline underline-offset-2"></h4>
+                          {[...Array(5)].map((prop, index) => {
+                            return <p key={index}>{prop}</p>;
+                          })}
+                        </div>
+                      );
+                    })
                   : proj.database_schema.map((aud, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className="text-md rounded-md bg-violet-100 p-3 capitalize"
-                      >
-                        <h4 className="mb-2 text-lg font-bold capitalize underline underline-offset-2">
-                          {aud.category}
-                        </h4>
-                        {aud.properties.map((prop, index) => {
-                          return <p key={index}>{prop}</p>;
-                        })}
-                      </div>
-                    );
-                  })}
+                      return (
+                        <div
+                          key={index}
+                          className="text-md rounded-md bg-violet-100 p-3 capitalize"
+                        >
+                          <h4 className="mb-2 text-lg font-bold capitalize underline underline-offset-2">
+                            {aud.category}
+                          </h4>
+                          {aud.properties.map((prop, index) => {
+                            return <p key={index}>{prop}</p>;
+                          })}
+                        </div>
+                      );
+                    })}
               </div>
             </div>
           </div>
 
           {/* Typography Suggestions  */}
-          <div className="rounded-md bg-gray-50 p-6 shadow-xl relative group">
-            <Dialog >
+          <div className="group relative rounded-md bg-gray-50 p-6 shadow-xl">
+            <Dialog>
               <DialogTrigger asChild>
-                {proj?.overview ? (<Button
-                  className="absolute right-5 top-5 hidden group-hover:flex"
-                  variant="outline"><Wand2 /> <p className="p-[0.3rem]">Edit with AI</p></Button>) : null}
+                {proj?.overview ? (
+                  <Button
+                    className="absolute right-5 top-5 hidden group-hover:flex"
+                    variant="outline"
+                  >
+                    <Wand2 /> <p className="p-[0.3rem]">Edit with AI</p>
+                  </Button>
+                ) : null}
               </DialogTrigger>
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
                   <DialogTitle>Edit with AI</DialogTitle>
                   <DialogDescription>
-                    Select the option you want and let the AI give you tailored answers
+                    Select the option you want and let the AI give you tailored
+                    answers
                   </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
@@ -437,9 +463,16 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
                       // onClick={() => {
 
                       // }}
-                      type="submit">Extrapolate this data with latest research till 2023</Button>
-                    <Button type="submit">Expand the answer to understand with ease</Button>
-                    <Button type="submit">Explain this data in less words</Button>
+                      type="submit"
+                    >
+                      Extrapolate this data with latest research till 2023
+                    </Button>
+                    <Button type="submit">
+                      Expand the answer to understand with ease
+                    </Button>
+                    <Button type="submit">
+                      Explain this data in less words
+                    </Button>
                     {/* <Label htmlFor="name" className="text-right">
               Name
             </Label>
@@ -448,53 +481,63 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
                 </div>
               </DialogContent>
             </Dialog>
-            <Heading icon={<CaseSensitive />} setActive={setActive} text="Typography Suggestions" />
+            <Heading
+              icon={<CaseSensitive />}
+              setActive={setActive}
+              text="Typography Suggestions"
+            />
             {/* <Description text={` ${proj?.target_audience}`} /> */}
             <div>
               <div className="mt-3 grid  grid-cols-2 gap-4">
                 {isLoading || !proj
                   ? [...Array(4)].map((index) => {
-                    return (
-                      <div
-                        key={index}
-                        className="flex animate-pulse flex-col gap-1 rounded-md bg-blue-200 p-3 text-left duration-1000"
-                      >
-                        <div className="h-5 w-full " />
-                      </div>
-                    );
-                  })
-                  : proj.website_ui.typography.map((aud, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className="flex flex-col gap-1 rounded-md bg-blue-100 p-3 text-left"
-                      >
-                        <h4
-                          className="text-xl font-bold capitalize"
-                          style={{ fontFamily: aud }}
+                      return (
+                        <div
+                          key={index}
+                          className="flex animate-pulse flex-col gap-1 rounded-md bg-blue-200 p-3 text-left duration-1000"
                         >
-                          {aud}
-                        </h4>
-                      </div>
-                    );
-                  })}
+                          <div className="h-5 w-full " />
+                        </div>
+                      );
+                    })
+                  : proj.website_ui.typography.map((aud, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className="flex flex-col gap-1 rounded-md bg-blue-100 p-3 text-left"
+                        >
+                          <h4
+                            className="text-xl font-bold capitalize"
+                            style={{ fontFamily: aud }}
+                          >
+                            {aud}
+                          </h4>
+                        </div>
+                      );
+                    })}
               </div>
             </div>
           </div>
 
           {/* Color Palette Suggestions  */}
-          <div className="rounded-md bg-gray-50 p-6 shadow-xl relative group">
-            <Dialog >
+          <div className="group relative rounded-md bg-gray-50 p-6 shadow-xl">
+            <Dialog>
               <DialogTrigger asChild>
-                {proj?.overview ? (<Button
-                  className="absolute right-5 top-5 hidden group-hover:flex"
-                  variant="outline"><Wand2 /> <p className="p-[0.3rem]">Edit with AI</p></Button>) : null}
+                {proj?.overview ? (
+                  <Button
+                    className="absolute right-5 top-5 hidden group-hover:flex"
+                    variant="outline"
+                  >
+                    <Wand2 /> <p className="p-[0.3rem]">Edit with AI</p>
+                  </Button>
+                ) : null}
               </DialogTrigger>
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
                   <DialogTitle>Edit with AI</DialogTitle>
                   <DialogDescription>
-                    Select the option you want and let the AI give you tailored answers
+                    Select the option you want and let the AI give you tailored
+                    answers
                   </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
@@ -503,9 +546,16 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
                       // onClick={() => {
 
                       // }}
-                      type="submit">Extrapolate this data with latest research till 2023</Button>
-                    <Button type="submit">Expand the answer to understand with ease</Button>
-                    <Button type="submit">Explain this data in less words</Button>
+                      type="submit"
+                    >
+                      Extrapolate this data with latest research till 2023
+                    </Button>
+                    <Button type="submit">
+                      Expand the answer to understand with ease
+                    </Button>
+                    <Button type="submit">
+                      Explain this data in less words
+                    </Button>
                     {/* <Label htmlFor="name" className="text-right">
               Name
             </Label>
@@ -514,63 +564,73 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
                 </div>
               </DialogContent>
             </Dialog>
-            <Heading icon={<Palette />} setActive={setActive} text="Color Palette Suggestions" />
+            <Heading
+              icon={<Palette />}
+              setActive={setActive}
+              text="Color Palette Suggestions"
+            />
             {/* <Description text={` ${proj?.target_audience}`} /> */}
             <div>
               <div className="mt-3 flex flex-col gap-4">
                 {isLoading || !proj
                   ? [...Array(2)].map((aud, index) => {
-                    return (
-                      <div key={index} className="flex gap-5">
-                        {[...Array(5)].map((index) => {
-                          return (
-                            <div
-                              key={index}
-                              className={cn(
-                                "flex aspect-square w-full animate-pulse items-center justify-center rounded-md bg-gray-300 duration-1000",
-                              )}
-                            ></div>
-                          );
-                        })}
-                      </div>
-                    );
-                  })
+                      return (
+                        <div key={index} className="flex gap-5">
+                          {[...Array(5)].map((index) => {
+                            return (
+                              <div
+                                key={index}
+                                className={cn(
+                                  "flex aspect-square w-full animate-pulse items-center justify-center rounded-md bg-gray-300 duration-1000",
+                                )}
+                              ></div>
+                            );
+                          })}
+                        </div>
+                      );
+                    })
                   : proj.website_ui.color_pallete.map((aud, index) => {
-                    return (
-                      <div key={index} className="flex gap-5">
-                        {aud.map((color, index) => {
-                          return (
-                            <div
-                              key={index}
-                              className={cn(
-                                "flex aspect-square w-full items-center justify-center rounded-md border-2 border-black",
-                              )}
-                              style={{ backgroundColor: `#${color}` }}
-                            >
-                              {color}
-                            </div>
-                          );
-                        })}
-                      </div>
-                    );
-                  })}
+                      return (
+                        <div key={index} className="flex gap-5">
+                          {aud.map((color, index) => {
+                            return (
+                              <div
+                                key={index}
+                                className={cn(
+                                  "flex aspect-square w-full items-center justify-center rounded-md border-2 border-black",
+                                )}
+                                style={{ backgroundColor: `#${color}` }}
+                              >
+                                {color}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      );
+                    })}
               </div>
             </div>
           </div>
 
           {/* Pain points of users  */}
-          <div className="rounded-md bg-gray-50 p-6 shadow-xl relative group">
-            <Dialog >
+          <div className="group relative rounded-md bg-gray-50 p-6 shadow-xl">
+            <Dialog>
               <DialogTrigger asChild>
-                {proj?.overview ? (<Button
-                  className="absolute right-5 top-5 hidden group-hover:flex"
-                  variant="outline"><Wand2 /> <p className="p-[0.3rem]">Edit with AI</p></Button>) : null}
+                {proj?.overview ? (
+                  <Button
+                    className="absolute right-5 top-5 hidden group-hover:flex"
+                    variant="outline"
+                  >
+                    <Wand2 /> <p className="p-[0.3rem]">Edit with AI</p>
+                  </Button>
+                ) : null}
               </DialogTrigger>
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
                   <DialogTitle>Edit with AI</DialogTitle>
                   <DialogDescription>
-                    Select the option you want and let the AI give you tailored answers
+                    Select the option you want and let the AI give you tailored
+                    answers
                   </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
@@ -579,9 +639,16 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
                       // onClick={() => {
 
                       // }}
-                      type="submit">Extrapolate this data with latest research till 2023</Button>
-                    <Button type="submit">Expand the answer to understand with ease</Button>
-                    <Button type="submit">Explain this data in less words</Button>
+                      type="submit"
+                    >
+                      Extrapolate this data with latest research till 2023
+                    </Button>
+                    <Button type="submit">
+                      Expand the answer to understand with ease
+                    </Button>
+                    <Button type="submit">
+                      Explain this data in less words
+                    </Button>
                     {/* <Label htmlFor="name" className="text-right">
               Name
             </Label>
@@ -590,48 +657,58 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
                 </div>
               </DialogContent>
             </Dialog>
-            <Heading icon={<Bug />} setActive={setActive} text="Pain Points of Users" />
+            <Heading
+              icon={<Bug />}
+              setActive={setActive}
+              text="Pain Points of Users"
+            />
             {/* <Description text={` ${proj?.target_audience}`} /> */}
             <div>
               <div className="mt-3 flex flex-col gap-4">
                 {isLoading || !proj
                   ? [...Array(4)].map((aud, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className="h-10 animate-pulse rounded-md bg-violet-100 capitalize  duration-1000"
-                      >
-                        {aud}
-                      </div>
-                    );
-                  })
+                      return (
+                        <div
+                          key={index}
+                          className="h-10 animate-pulse rounded-md bg-violet-100 capitalize  duration-1000"
+                        >
+                          {aud}
+                        </div>
+                      );
+                    })
                   : proj.pain_points_of_user.map((aud, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className="text-md rounded-md bg-violet-100 p-3   capitalize"
-                      >
-                        {aud}
-                      </div>
-                    );
-                  })}
+                      return (
+                        <div
+                          key={index}
+                          className="text-md rounded-md bg-violet-100 p-3   capitalize"
+                        >
+                          {aud}
+                        </div>
+                      );
+                    })}
               </div>
             </div>
           </div>
 
           {/* Required Features  */}
-          <div className="rounded-md bg-gray-50 p-6 shadow-xl relative group">
-            <Dialog >
+          <div className="group relative rounded-md bg-gray-50 p-6 shadow-xl">
+            <Dialog>
               <DialogTrigger asChild>
-                {proj?.overview ? (<Button
-                  className="absolute right-5 top-5 hidden group-hover:flex"
-                  variant="outline"><Wand2 /> <p className="p-[0.3rem]">Edit with AI</p></Button>) : null}
+                {proj?.overview ? (
+                  <Button
+                    className="absolute right-5 top-5 hidden group-hover:flex"
+                    variant="outline"
+                  >
+                    <Wand2 /> <p className="p-[0.3rem]">Edit with AI</p>
+                  </Button>
+                ) : null}
               </DialogTrigger>
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
                   <DialogTitle>Edit with AI</DialogTitle>
                   <DialogDescription>
-                    Select the option you want and let the AI give you tailored answers
+                    Select the option you want and let the AI give you tailored
+                    answers
                   </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
@@ -640,9 +717,16 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
                       // onClick={() => {
 
                       // }}
-                      type="submit">Extrapolate this data with latest research till 2023</Button>
-                    <Button type="submit">Expand the answer to understand with ease</Button>
-                    <Button type="submit">Explain this data in less words</Button>
+                      type="submit"
+                    >
+                      Extrapolate this data with latest research till 2023
+                    </Button>
+                    <Button type="submit">
+                      Expand the answer to understand with ease
+                    </Button>
+                    <Button type="submit">
+                      Explain this data in less words
+                    </Button>
                     {/* <Label htmlFor="name" className="text-right">
               Name
             </Label>
@@ -651,36 +735,40 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
                 </div>
               </DialogContent>
             </Dialog>
-            <Heading icon={<BookCheck />} setActive={setActive} text="Required Features" />
+            <Heading
+              icon={<BookCheck />}
+              setActive={setActive}
+              text="Required Features"
+            />
             <div>
               <div className="mt-3 flex flex-col gap-4">
                 {isLoading || !proj
                   ? [...Array(4)].map((aud, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className="h-10 animate-pulse rounded-md bg-blue-100 capitalize  duration-1000"
-                      >
-                        {aud}
-                      </div>
-                    );
-                  })
+                      return (
+                        <div
+                          key={index}
+                          className="h-10 animate-pulse rounded-md bg-blue-100 capitalize  duration-1000"
+                        >
+                          {aud}
+                        </div>
+                      );
+                    })
                   : proj.required_features.map((aud, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className="text-md rounded-md bg-blue-100 p-3   capitalize"
-                      >
-                        {aud}
-                      </div>
-                    );
-                  })}
+                      return (
+                        <div
+                          key={index}
+                          className="text-md rounded-md bg-blue-100 p-3   capitalize"
+                        >
+                          {aud}
+                        </div>
+                      );
+                    })}
               </div>
             </div>
           </div>
 
           {/* Big Brands  */}
-          <div className="rounded-md bg-gray-50 p-6 shadow-xl relative group">
+          {/* <div className="rounded-md bg-gray-50 p-6 shadow-xl relative group">
             <Dialog >
               <DialogTrigger asChild>
                 {proj?.overview ? (<Button
@@ -697,16 +785,11 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
                 <div className="grid gap-4 py-4">
                   <div className="grid grid-cols-1 items-center gap-4">
                     <Button
-                      // onClick={() => {
-
-                      // }}
+                     
                       type="submit">Extrapolate this data with latest research till 2023</Button>
                     <Button type="submit">Expand the answer to understand with ease</Button>
                     <Button type="submit">Explain this data in less words</Button>
-                    {/* <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input id="name" value="Pedro Duarte" className="col-span-3" /> */}
+                
                   </div>
                 </div>
               </DialogContent>
@@ -715,7 +798,7 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
               <Heading icon={<ArrowBigUpDash />} setActive={setActive} text="Your Competitors" />
               <p>Brands that dominate similar or this particular domain(s)</p>
             </div>
-            {/* <Description text={` ${proj?.target_audience}`} /> */}
+        
             <div>
               <div className="mt-3 grid grid-cols-3 gap-4">
                 {isLoading || !proj
@@ -752,29 +835,40 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
                   })}
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Industry Trends  */}
-          <div className="rounded-md bg-gray-50 p-6 shadow-xl relative group">
-            <Dialog >
+          <div className="group relative rounded-md bg-gray-50 p-6 shadow-xl">
+            <Dialog>
               <DialogTrigger asChild>
-                {proj?.overview ? (<Button
-                  className="absolute right-5 top-5 hidden group-hover:flex"
-                  variant="outline"><Wand2 /> <p className="p-[0.3rem]">Edit with AI</p></Button>) : null}
+                {proj?.overview ? (
+                  <Button
+                    className="absolute right-5 top-5 hidden group-hover:flex"
+                    variant="outline"
+                  >
+                    <Wand2 /> <p className="p-[0.3rem]">Edit with AI</p>
+                  </Button>
+                ) : null}
               </DialogTrigger>
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
                   <DialogTitle>Edit with AI</DialogTitle>
                   <DialogDescription>
-                    Select the option you want and let the AI give you tailored answers
+                    Select the option you want and let the AI give you tailored
+                    answers
                   </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
                   <div className="grid grid-cols-1 items-center gap-4">
-                    <Button
-                      type="submit">Extrapolate this data with latest research till 2023</Button>
-                    <Button type="submit">Expand the answer to understand with ease</Button>
-                    <Button type="submit">Explain this data in less words</Button>
+                    <Button type="submit">
+                      Extrapolate this data with latest research till 2023
+                    </Button>
+                    <Button type="submit">
+                      Expand the answer to understand with ease
+                    </Button>
+                    <Button type="submit">
+                      Explain this data in less words
+                    </Button>
                     {/* <Label htmlFor="name" className="text-right">
               Name
             </Label>
@@ -813,6 +907,253 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
               </div>
             </div>
           </div>
+
+          {/* Carbon footprint resasons  */}
+          <div className="group relative rounded-md bg-gray-50 p-6 shadow-xl">
+            <DialogEdit />
+            <Heading
+              icon={<Footprints />}
+              setActive={setActive}
+              text="Key Contributors to Your Carbon Footprint"
+            />
+            <div>
+              <div className="mt-3 flex flex-col gap-4">
+                {isLoading || !proj
+                  ? [...Array(4)].map((aud, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className="h-10 animate-pulse rounded-md bg-blue-100 capitalize  duration-1000"
+                        >
+                          {aud}
+                        </div>
+                      );
+                    })
+                  : proj.carbon_fp_reasons?.map((aud, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className="text-md rounded-md bg-red-100 p-3   capitalize"
+                        >
+                          {aud}
+                        </div>
+                      );
+                    })}
+              </div>
+            </div>
+          </div>
+
+          {/* Sustainable Measures  */}
+          <div className="group relative rounded-md bg-gray-50 p-6 shadow-xl">
+            <DialogEdit />
+            <Heading
+              icon={<Recycle />}
+              setActive={setActive}
+              text="Sustainable Practices for a Smaller Footprint"
+            />
+            <div>
+              <div className="mt-3 flex flex-col gap-4">
+                {isLoading || !proj
+                  ? [...Array(4)].map((aud, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className="h-10 animate-pulse rounded-md bg-blue-100 capitalize  duration-1000"
+                        >
+                          {aud}
+                        </div>
+                      );
+                    })
+                  : proj.sustainable_measures_to_reduce_carbon_footprints?.map(
+                      (aud, index) => {
+                        return (
+                          <div
+                            key={index}
+                            className="text-md rounded-md bg-green-100 p-3   capitalize"
+                          >
+                            {aud}
+                          </div>
+                        );
+                      },
+                    )}
+              </div>
+            </div>
+          </div>
+
+          {/* Actionable CSR Strategies  */}
+          <div className="group relative rounded-md bg-gray-50 p-6 shadow-xl">
+            <DialogEdit />
+            <Heading
+              icon={<SmilePlus />}
+              setActive={setActive}
+              text="Actionable CSR Strategies"
+            />
+            <div>
+              <div className="mt-3 flex flex-col gap-4">
+                {isLoading || !proj
+                  ? [...Array(4)].map((aud, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className="h-10 animate-pulse rounded-md bg-blue-100 capitalize  duration-1000"
+                        >
+                          {aud}
+                        </div>
+                      );
+                    })
+                  : proj.measures_for_corporate_social_responsibility?.map(
+                      (aud, index) => {
+                        return (
+                          <div
+                            key={index}
+                            className="text-md rounded-md bg-blue-100 p-3   capitalize"
+                          >
+                            {aud}
+                          </div>
+                        );
+                      },
+                    )}
+              </div>
+            </div>
+          </div>
+
+          {/* DB Schema  */}
+          {proj?.swot_analysis && (
+            <div className="group relative rounded-md bg-gray-50 p-6 shadow-xl">
+              <DialogEdit />
+              <Heading
+                icon={<Calculator />}
+                setActive={setActive}
+                text="SWOT Analysis"
+              />
+              <div>
+                <div className="mt-3 grid grid-cols-2 gap-4">
+                  {isLoading || !proj
+                    ? [...Array(4)].map((aud, index) => {
+                        return (
+                          <div
+                            key={index}
+                            className="h-10 w-full animate-pulse rounded-md bg-violet-100 duration-1000"
+                          >
+                            <h4 className="mb-2 text-lg font-bold capitalize underline underline-offset-2"></h4>
+                            {[...Array(5)].map((prop, index) => {
+                              return <p key={index}>{prop}</p>;
+                            })}
+                          </div>
+                        );
+                      })
+                    : Object.keys(proj.swot_analysis).map((aud, index) => {
+                        const colors = [
+                          "bg-green-100",
+                          "bg-orange-100",
+                          "bg-blue-100",
+                          "bg-red-100",
+                        ];
+                        return (
+                          <div
+                            key={index}
+                            className={cn(
+                              "text-md rounded-md p-3 capitalize",
+                              colors[index % 4],
+                            )}
+                          >
+                            <h4 className="mb-2 text-lg font-bold capitalize underline underline-offset-2">
+                              {aud}
+                            </h4>
+                            <div className="flex flex-col gap-2">
+                              {proj.swot_analysis[aud].map((prop, index) => {
+                                return (
+                                  <p
+                                    key={index}
+                                    className={cn(
+                                      "p-1",
+                                      index ? "border-t-2 border-black" : "",
+                                    )}
+                                  >
+                                    {prop}
+                                  </p>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        );
+                      })}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* competitor analysis  */}
+          {proj?.competitor_analysis && (
+            <div className="group relative rounded-md bg-gray-50 p-6 shadow-xl">
+              <DialogEdit />
+              <Heading
+                icon={<Calculator />}
+                setActive={setActive}
+                text="Know Your Rivals"
+              />
+              <div>
+                {/* <div className="mt-3 grid grid-cols-1 gap-1">
+                  {Object.keys(proj.competitor_analysis[0]).map(
+                    (aud, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className="text-md rounded-md grid grid-cols-5 gap-3 bg-violet-100 p-3 capitalize"
+                        >
+                          <h4 className="mb-2  font-bold capitalize underline underline-offset-2">
+                            {aud}
+                            </h4>
+                          <div className="col-span-2 ">
+                            {proj.competitor_analysis[0][aud]}
+                          </div>
+                          <div className="col-span-2 grid">
+                            {proj.competitor_analysis[1][aud]}
+                          </div>
+                        </div>
+                      );
+                    },
+                  )}
+                </div> */}
+                <Table>
+                  <TableBody>
+                {Object.keys(proj.competitor_analysis[0]).map(
+                    (aud, index) => {
+                      const conversion = {
+                        name : "Name",
+                        "USP": "USP",
+                            "pricing_strategy": "Pricing Strategy",
+                            "promotion_strategy": "Marketing Policy",
+                            "product_strategy": "Product Strategy",
+                            "user_complaints" : "Actionable Insights",
+                            "shortcomings": "shortcomings",
+                            "user_praises": "Strengths"
+                      }
+                      const colors = ["bg-violet-100","bg-violet-50"]
+                      return (
+                        <TableRow
+                          key={index}
+                          className={cn("text-md grid grid-cols-5 gap-3 capitalize",colors[index % 2])}
+                        >
+                          <TableCell className="font-bold capitalize underline underline-offset-2">
+                            {conversion[aud]}
+                            </TableCell>
+                          <TableCell className="col-span-2 ">
+                            {proj.competitor_analysis[0][aud]}
+                          </TableCell >
+                          <TableCell className="col-span-2 grid">
+                            {proj.competitor_analysis[1][aud]}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    },
+                  )}
+                  </TableBody>
+                </Table>
+
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>

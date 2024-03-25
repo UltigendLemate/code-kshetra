@@ -87,3 +87,5 @@
 .iconProj svg{
   @apply inline mr-3 w-8 h-8;
 }
+
+table td + td { border-left:2px solid black; }
