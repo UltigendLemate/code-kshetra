@@ -71,7 +71,7 @@ async function run(idea: string) {
       output : {
       overview : "", 
       target_audience : "" , 
-      // target audience is a list of strings of minimum 4 strings. all strings are target audience.
+      // target audience is an array of strings of minimum 4 strings. all strings are target audience.
       industry_trends : {
       india: "", 
       // this will be a string of minimum 26 characters
@@ -122,7 +122,6 @@ async function run(idea: string) {
       give the output in JSON format strictly. your output should be strictly of the following type : 
       export type Project = {
         overview: string,
-        big_brands : string[],
         database_schema : {
             category : string,
             properties : string[]
@@ -141,7 +140,7 @@ async function run(idea: string) {
         suggested_names : string[],
       
         swot_analysis : {
-        strenghts : string[],
+        strengths : string[],
         weaknesses: string[],
         opportunities: string[],
         threats : string[],   
@@ -175,9 +174,143 @@ async function run(idea: string) {
     .substring(7, response.length - 3)
     .replace(/[^\{\}\[\]\w\s,":]/g, "");
   const finalJson = JSON.parse(subs) as Project;
-  return finalJson;
+  const correctJson = checkObjectType(finalJson);
+  console.log(correctJson)
+  return correctJson;
+
 }
 
+function checkObjectType(obj : Project) {
+  const defaults : Project = {
+      overview: "",
+      database_schema: [],
+      industry_trends: { india: "", us_europe: "" },
+      pain_points_of_user: [],
+      required_features: [],
+      target_audience: [],
+      website_ui: { color_pallete: [[]], typography: [] },
+      suggested_names: [],
+      app_icons: [],
+      web_designs: [],
+      swot_analysis: { strengths: [], weaknesses: [], opportunities: [], threats: [] },
+      measures_for_corporate_social_responsibility: [],
+      carbon_fp_reasons: [],
+      sustainable_measures_to_reduce_carbon_footprints: [],
+      competitor_analysis: []
+  };
+
+  const expectedKeys = Object.keys(defaults);
+
+  // Check if all expected keys are present
+  for (const key of expectedKeys) {
+      if (!(key in obj)) {
+          console.log(`Missing key: ${key}`);
+          // obj[key] = defaults[key];
+      }
+  }
+
+
+
+  if (!Array.isArray(obj.database_schema) || obj.database_schema.some(item => typeof item !== 'object' || !Array.isArray(item.properties))) {
+      console.log('database_schema should be an array of objects with properties array');
+      obj.database_schema = defaults.database_schema;
+  }
+
+  if (typeof obj.industry_trends !== 'object' ||
+      typeof obj.industry_trends.india !== 'string' ||
+      typeof obj.industry_trends.us_europe !== 'string') {
+      console.log('industry_trends should be an object with india and us_europe properties of type string');
+      obj.industry_trends = defaults.industry_trends;
+  }
+
+  if (!Array.isArray(obj.pain_points_of_user) || !obj.pain_points_of_user.every(item => typeof item === 'string')) {
+      console.log('pain_points_of_user should be an array of strings');
+      obj.pain_points_of_user = defaults.pain_points_of_user;
+  }
+
+  if (!Array.isArray(obj.required_features) || !obj.required_features.every(item => typeof item === 'string')) {
+      console.log('required_features should be an array of strings');
+      obj.required_features = defaults.required_features;
+  }
+
+  if (!Array.isArray(obj.target_audience) || !obj.target_audience.every(item => typeof item === 'string')) {
+      console.log('target_audience should be an array of strings');
+      obj.target_audience = defaults.target_audience;
+  }
+
+  if (typeof obj.website_ui !== 'object' ||
+      !Array.isArray(obj.website_ui.color_pallete) ||
+      !obj.website_ui.color_pallete.every(item => Array.isArray(item) && item.every(color => typeof color === 'string')) ||
+      !Array.isArray(obj.website_ui.typography) ||
+      !obj.website_ui.typography.every(item => typeof item === 'string')) {
+      console.log('website_ui should be an object with color_pallete as an array of arrays of strings and typography as an array of strings');
+      obj.website_ui = defaults.website_ui;
+  }
+
+  // Optional properties
+  if (obj.overview && typeof obj.overview !== 'string') {
+      console.log('overview should be a string');
+      obj.overview = defaults.overview;
+  }
+
+  if (obj.suggested_names && (!Array.isArray(obj.suggested_names) || !obj.suggested_names.every(item => typeof item === 'string'))) {
+      console.log('suggested_names should be an array of strings');
+      obj.suggested_names = defaults.suggested_names;
+  }
+
+  if (obj.app_icons && (!Array.isArray(obj.app_icons) || !obj.app_icons.every(item => typeof item === 'string'))) {
+      console.log('app_icons should be an array of strings');
+      obj.app_icons = defaults.app_icons;
+  }
+
+  if (obj.web_designs && (!Array.isArray(obj.web_designs) || !obj.web_designs.every(item => typeof item === 'string'))) {
+      console.log('web_designs should be an array of strings');
+      obj.web_designs = defaults.web_designs;
+  }
+
+  if (obj.swot_analysis && (typeof obj.swot_analysis !== 'object' ||
+      !Array.isArray(obj.swot_analysis.strengths) ||
+      !obj.swot_analysis.strengths.every(item => typeof item === 'string') ||
+      !Array.isArray(obj.swot_analysis.weaknesses) ||
+      !obj.swot_analysis.weaknesses.every(item => typeof item === 'string') ||
+      !Array.isArray(obj.swot_analysis.opportunities) ||
+      !obj.swot_analysis.opportunities.every(item => typeof item === 'string') ||
+      !Array.isArray(obj.swot_analysis.threats) ||
+      !obj.swot_analysis.threats.every(item => typeof item === 'string'))) {
+      console.log('swot_analysis should be an object with strenghts, weaknesses, opportunities, and threats as arrays of strings');
+      obj.swot_analysis = defaults.swot_analysis;
+  }
+
+  if (obj.measures_for_corporate_social_responsibility && (!Array.isArray(obj.measures_for_corporate_social_responsibility) || !obj.measures_for_corporate_social_responsibility.every(item => typeof item === 'string'))) {
+      console.log('measures_for_corporate_social_responsibility should be an array of strings');
+      obj.measures_for_corporate_social_responsibility = defaults.measures_for_corporate_social_responsibility;
+  }
+
+  if (obj.carbon_fp_reasons && (!Array.isArray(obj.carbon_fp_reasons) || !obj.carbon_fp_reasons.every(item => typeof item === 'string'))) {
+      console.log('carbon_fp_reasons should be an array of strings');
+      obj.carbon_fp_reasons = defaults.carbon_fp_reasons;
+  }
+
+  if (obj.sustainable_measures_to_reduce_carbon_footprints && (!Array.isArray(obj.sustainable_measures_to_reduce_carbon_footprints) || !obj.sustainable_measures_to_reduce_carbon_footprints.every(item => typeof item === 'string'))) {
+      console.log('sustainable_measures_to_reduce_carbon_footprints should be an array of strings');
+      obj.sustainable_measures_to_reduce_carbon_footprints = defaults.sustainable_measures_to_reduce_carbon_footprints;
+  }
+
+  if (obj.competitor_analysis && (!Array.isArray(obj.competitor_analysis) || !obj.competitor_analysis.every(item => typeof item === 'object' &&
+      typeof item.name === 'string' &&
+      typeof item.USP === 'string' &&
+      typeof item.pricing_strategy === 'string' &&
+      typeof item.promotion_strategy === 'string' &&
+      typeof item.product_strategy === 'string' &&
+      typeof item.user_complaints === 'string' &&
+      typeof item.shortcomings === 'string' &&
+      typeof item.user_praises === 'string'))) {
+      console.log('competitor_analysis should be an array of objects with specified properties');
+      obj.competitor_analysis = defaults.competitor_analysis;
+  }
+
+  return obj;
+}
 // const openai = new OpenAI();
 
 // async function image_generation(idea : string) {

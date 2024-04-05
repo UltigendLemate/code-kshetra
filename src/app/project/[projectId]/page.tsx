@@ -1084,7 +1084,7 @@ export default function ProjectPage({
           )}
 
           {/* competitor analysis  */}
-          {proj?.competitor_analysis && (
+          {proj?.competitor_analysis  && (
             <div className="group relative rounded-md bg-gray-50 p-6 shadow-xl">
               <DialogEdit />
               <Heading

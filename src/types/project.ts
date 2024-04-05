@@ -1,6 +1,5 @@
 export type Project = {
     overview?: string,
-    big_brands : string[],
     database_schema : {
         category : string,
         properties : string[]
@@ -20,7 +19,7 @@ export type Project = {
     app_icons? : string[],
     web_designs? : string[],
     swot_analysis? : {
-		strenghts : string[],
+		strengths : string[],
 		weaknesses: string[],
 		opportunities: string[],
 		threats : string[],		

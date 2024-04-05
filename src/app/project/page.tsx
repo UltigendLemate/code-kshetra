@@ -79,7 +79,7 @@ export default function Project() {
 
             <Button className="!mt-7 w-fit" disabled={isLoading} type="submit">
               {!isLoading ? null : <div className="animate-spin"><AiOutlineLoading /> </div>}
-              {!isLoading ? "Generate Idea" : "Generating Idea"}
+              {!isLoading ? "Generate plan" : "Generating plan"}
             </Button>
           </form>
 
